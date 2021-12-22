@@ -3,13 +3,13 @@ package es.jmdedios.proyectooneticket.controller;
 import es.jmdedios.proyectooneticket.model.Usuario;
 import es.jmdedios.proyectooneticket.repository.IUsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.ReactiveSecurityContextHolder;
+import org.springframework.security.ldap.userdetails.LdapUserDetailsImpl;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import reactor.core.publisher.Mono;
-
-import java.util.concurrent.ExecutionException;
 
 @Controller
 public class MainController {
@@ -17,12 +17,18 @@ public class MainController {
     @Autowired
     IUsuarioRepository usuarioRepository;
 
+    @ModelAttribute("usuario")
+    public Mono<Usuario> messages() {
+        return this.getUsuario()
+                .switchIfEmpty(Mono.just(new Usuario("0", "No localizado", "No localizado", null)));
+    }
+
     @GetMapping("/")
-    public String index(final Model model) throws ExecutionException, InterruptedException {
+    public String index(Authentication auth) {
 
-        model.addAttribute("usuario", this.getUsuario().switchIfEmpty(
-                Mono.just(new Usuario("1", "pepe", "pepe", null))));
-
+        if (auth.getName().equals("admin")) {
+            return "redirect:/admin";
+        }
         return "index";
     }
 

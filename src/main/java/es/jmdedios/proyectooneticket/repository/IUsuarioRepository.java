@@ -6,6 +6,6 @@ import reactor.core.publisher.Mono;
 
 public interface IUsuarioRepository extends ReactiveMongoRepository<Usuario, String> {
 
-    Mono<Usuario> findByCodigo(String username);
+    Mono<Usuario> findByCodigo (String username);
 
 }

@@ -1,7 +1,5 @@
 package es.jmdedios.proyectooneticket.configuration;
 
-import es.jmdedios.proyectooneticket.repository.IUsuarioRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.authentication.ReactiveAuthenticationManagerAdapter;
+import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
 import org.springframework.security.ldap.authentication.BindAuthenticator;
@@ -23,6 +22,7 @@ import org.springframework.security.web.server.util.matcher.ServerWebExchangeMat
 import java.util.Arrays;
 
 @Configuration
+@EnableWebFluxSecurity
 public class LDAPReactiveSecurityConfig {
 
     @Value("${ldap.url}")
@@ -42,9 +42,6 @@ public class LDAPReactiveSecurityConfig {
 
     @Value("${ldap.group.search.filter}")
     private String ldapGroupSearchFilter;
-
-    @Autowired
-    private IUsuarioRepository repository;
 
     @Bean
     BaseLdapPathContextSource contextSource() {
@@ -88,4 +85,5 @@ public class LDAPReactiveSecurityConfig {
         authorityMapper.setConvertToUpperCase(true);
         return authorityMapper;
     }
+
 }

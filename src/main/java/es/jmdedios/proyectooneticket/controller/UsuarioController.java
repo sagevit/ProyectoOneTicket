@@ -35,9 +35,9 @@ public class UsuarioController {
     }
 
     @PostMapping("/createUser")
-    public String createUser(Usuario usuario, final Model model) {
+    public String createUser(Usuario usuario) {
         repository.save(usuario);
-        return "/list-usuarios";
+        return "redirect:/usuario/list-usuarios";
     }
 
 }
