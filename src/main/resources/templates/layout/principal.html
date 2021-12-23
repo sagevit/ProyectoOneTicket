@@ -28,51 +28,38 @@
 <body>
 
     <!-- Barra superior -->
-    <nav class="py-2 bg-light border-bottom">
-        <div class="container d-flex flex-wrap">
-            bienvenido desarrollador 1
-        </div>
-    </nav>
     <header>
-        <div class="px-3 py-2 bg-primary text-white mb-4 shadow">
+        <div class="bg-primary text-white mb-2 shadow">
             <div class="container">
                 <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                     <a href="#" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
-                        <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
+                        <i class="bi bi-bootstrap-fill me-2 fs-1" role="img"></i>
                     </a>
-
                     <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
                         <li>
-                            <a href="#" class="nav-link text-secondary">
-                                <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#home"/></svg>
-                                Home
+                            <a href="#" class="nav-link text-white">
+                                <i class="bi bi-sliders d-block mx-auto mb-1 fs-2 text-center" width="24" height="24"></i>
+                                <span>Opciones</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="nav-link text-white">
-                                <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#speedometer2"/></svg>
-                                Dashboard
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="nav-link text-white">
-                                <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#table"/></svg>
-                                Orders
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="nav-link text-white">
-                                <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#grid"/></svg>
-                                Products
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="nav-link text-white">
-                                <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#people-circle"/></svg>
-                                Customers
+                            <a href="/logout" class="nav-link text-white">
+                                <i class="bi bi-box-arrow-left d-block mx-auto mb-1 fs-2 text-center" width="24" height="24"></i>
+                                <span>Salir</span>
                             </a>
                         </li>
                     </ul>
+                </div>
+            </div>
+        </div>
+        <div th:if="${logged.codigo} != null" class="border-bottom pb-2 mb-3">
+            <div class="container d-flex flex-wrap justify-content-center">
+                <form class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto">
+                    <input type="search" class="form-control" placeholder="Buscar tarea...">
+                </form>
+
+                <div class="text-end d-flex my-auto">
+                    <span class="align-middle" th:text="'Bienvenido, ' + ${logged.nombre}"></span>
                 </div>
             </div>
         </div>
@@ -81,5 +68,9 @@
     <div layout:fragment="contenido">
         <!-- Aquí irá el contenido de las distintas páginas -->
     </div>
+
+    <!-- Bootstrap JavaScript -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+          th:href="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}">
 </body>
 </html>

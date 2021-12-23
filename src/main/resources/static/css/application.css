@@ -3,3 +3,32 @@
 body {
     font-family: 'Sarabun', sans-serif;
 }
+
+.myGrid {
+    grid-template-columns: 2fr 4fr;
+}
+
+/* List-group */
+.list-group-checkable {
+    display: grid;
+    gap: .5rem;
+    border: 0;
+}
+.list-group-checkable .list-group-item {
+    cursor: pointer;
+    border-radius: .5rem;
+    min-height: 6em;
+}
+.list-group-item-check {
+    position: absolute;
+    clip: rect(0, 0, 0, 0);
+    pointer-events: none;
+}
+.list-group-item-check:hover + .list-group-item {
+    background-color: var(--bs-light);
+}
+.list-group-item-check:checked + .list-group-item {
+    color: #fff;
+    background-color: var(--bs-blue);
+}
+/* List-group */
