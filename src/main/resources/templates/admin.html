@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/principal}">
 <head>
@@ -10,50 +9,50 @@
 </head>
 <body>
 <div layout:fragment="contenido">
-    <div class="container pt-3">
-        <div class="d-grid gap-3 myGrid">
-            <div class="bg-light border rounded-3 shadow" id="listado">
-                <div class="list-group list-group-checkable p-2">
-                    <!-- Bloque: uno por usuario existente en bd -->
-                    <th:block th:each="usuario : ${usuarios}">
-                        <input class="list-group-item-check" type="radio" name="listGroupCheckableRadios" id="listGroupCheckableRadios" th:value="${usuario.codigo}">
-                        <label class="list-group-item py-3" for="listGroupCheckableRadios">
-                            <span th:text="${usuario.codigo}">código de usuario</span>
-                            <span class="d-block small opacity-75" th:text="${usuario.nombre}">nombre de usuario</span>
-                            <span class="d-block small opacity-75" th:text="${usuario.email}">email de usuario</span>
-                        </label>
-                    </th:block>
 
-                    <!-- Elemento + para dar de alta usuarios -->
-                    <input class="list-group-item-check" type="radio" name="listGroupCheckableRadios" id="alta" value="">
-                    <label class="list-group-item py-3 text-center" for="alta">
-                        <i class="bi bi-person-plus-fill display-5 fw-bold opacity-25"></i>
-                    </label>
+    <div th:replace="~{fragments/filterbar::filterAdmin}"></div>
+
+    <div id="listUsuarios">
+        <div class="container bg-light border rounded-3 shadow pt-1 ps-3 pb-3 mt-5">
+            <div class="row row-cols-3">
+                <!-- Un card por cada usuario existente en bd -->
+                <div class="col pt-3" th:each="usuario : ${usuarios}">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-header d-flex">
+                            <i class="bi bi-person-fill me-1"></i>
+                            <strong class="me-auto" th:text="${usuario.codigo}">código de usuario</strong>
+                            <a href="#" th:href="@{/admin/editar/{id} (id=${usuario.id})}">
+                                <i class="bi bi-pencil-square me-1 fs-5 text-primary opacity-75" th:if="${usuario.codigo} != 'admin'"></i>
+                            </a>
+                            <a href="#" th:href="@{/admin/editar/{id} (id=${usuario.id})}">
+                                <i class="bi bi-trash fs-5 text-primary opacity-75" th:if="${usuario.codigo} != 'admin'"></i>
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-title" th:text="${usuario.nombre}">nombre de usuario</div>
+                            <div class="card-text text-secondary" th:text="${usuario.email}">email de usuario</div>
+                            <div class="card-text text-primary opacity-75 text-end"
+                                 th:text="${usuario.codigo} != 'admin' ? ${usuario.rol.descripcion} : 'Administrador'">rol de usuario</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Elemento + para dar de alta usuarios -->
+                <div class="col pt-3">
+                    <a class="text-decoration-none" th:href="@{/admin/nuevo/}">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-header text-secondary fst-italic">
+                                Nuevo usuario
+                            </div>
+                            <div class="card-body text-primary text-center">
+                                <i class="bi bi-person-plus-fill display-3 fw-bold opacity-25"></i>
+                            </div>
+                        </div>
+                    </a>
                 </div>
             </div>
-
-            <div class="bg-light border rounded-3 shadow" id="registro">
-
-            </div>
         </div>
     </div>
-    <div>
-        <!--
-        <h3 th:text="${logged.id}"></h3>
-        <h3 th:text="${logged.codigo}"></h3>
-        <h3 th:text="${logged.nombre}"></h3>
-        <div th:each="proyecto,iterador : ${logged.proyectos}">
-            <span th:text="${iterador.index}"></span>
-            <span> - </span>
-            <span th:text="${proyecto}">id proyecto</span>
-        </div>
-
-        <pre>
-            -----------------------------
-        </pre>
-        <div sec:authentication="name"></div>
-        <div sec:authentication="principal.authorities"></div>
-        -->
-    </div>
+</div>
 </body>
 </html>

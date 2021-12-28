@@ -15,11 +15,11 @@
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-          th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+          th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 
     <!-- Bootstrap icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css"
-          th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}">
+          th:rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}">
 
     <!-- Custom css -->
     <link rel="stylesheet" href="../static/css/application.css" th:href="@{/css/application.css}"/>
@@ -29,11 +29,29 @@
 
     <!-- Barra superior -->
     <header>
-        <div class="bg-primary text-white mb-2 shadow">
+        <!-- Datos del usuario -->
+        <div class="container d-flex flex-wrap align-items-center justify-content-between">
+            <div class="d-flex my-auto">
+                <span class="align-middle" th:text="'Bienvenido, ' + ${logged.nombre}"></span>
+            </div>
+            <div class="d-flex my-auto text-secondary">
+                <span class="align-middle" th:text="'Código: ' + ${logged.codigo}"></span>
+            </div>
+            <div class="d-flex my-auto text-secondary">
+                <span class="align-middle" th:text="'Email: ' + ${logged.email}"></span>
+            </div>
+            <div class="d-flex my-auto text-secondary">
+                <span class="align-middle text-primary opacity-75"
+                      th:text="${logged.codigo} != 'admin' ? 'Rol: ' + ${logged.rol.descripcion} : 'Rol: Administrador'"></span>
+            </div>
+        </div>
+
+        <!-- Barra principal -->
+        <div class="bg-primary text-white mb-3 shadow">
             <div class="container">
                 <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                    <a href="#" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
-                        <i class="bi bi-bootstrap-fill me-2 fs-1" role="img"></i>
+                    <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
+                        <i class="bi bi-ticket-perforated-fill me-2 fs-1" role="img"> OneTicket</i>
                     </a>
                     <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
                         <li>
@@ -52,17 +70,6 @@
                 </div>
             </div>
         </div>
-        <div th:if="${logged.codigo} != null" class="border-bottom pb-2 mb-3">
-            <div class="container d-flex flex-wrap justify-content-center">
-                <form class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto">
-                    <input type="search" class="form-control" placeholder="Buscar tarea...">
-                </form>
-
-                <div class="text-end d-flex my-auto">
-                    <span class="align-middle" th:text="'Bienvenido, ' + ${logged.nombre}"></span>
-                </div>
-            </div>
-        </div>
     </header>
 
     <div layout:fragment="contenido">
@@ -70,7 +77,11 @@
     </div>
 
     <!-- Bootstrap JavaScript -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-          th:href="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+          th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+            th:src="@{/webjars/jquery/dist/jquery.min.js}"></script>
 </body>
 </html>

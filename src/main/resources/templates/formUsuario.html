@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/principal}">
+<head>
+    <meta charset="UTF-8">
+    <title>One Ticket - Nuevo usuario</title>
+</head>
+<body>
+<div layout:fragment="contenido">
+    <div class="container bg-light border rounded-3 shadow pt-1 ps-3 pb-3 mt-5">
+        <form method="post" action="#" id="formUsuario" role="form" class="row g-3"
+              th:action="@{/admin/grabar}" th:object="${usuario}">
+
+            <fieldset>
+                <legend th:text="${usuario.id} ? 'Editar usuario' : 'Nuevo usuario'"></legend>
+
+                <input type="hidden" th:if="${usuario.id}" th:field="*{id}" id="id" />
+                <div class="col-2 pb-3">
+                    <label class="form-label ms-1" for="codigo">Código de usuario *</label>
+                    <div class="input-group" th:classappend="${#fields.hasErrors('codigo')} ? 'has-validation'">
+                        <input type="text" id="codigo" maxlength="18" placeholder="Código..." autofocus required
+                               class="form-control shadow" th:field="*{codigo}" th:classappend="${#fields.hasErrors('codigo')} ? 'is-invalid'">
+                        <div class="invalid-feedback ms-1" th:if="${#fields.hasErrors('codigo')}"
+                             th:errors="*{codigo}">error!</div>
+                    </div>
+                </div>
+
+                <div class="col-4 pb-3">
+                    <label class="form-label ms-1" for="nombre">Nombre de usuario *</label>
+                    <div class="input-group" th:classappend="${#fields.hasErrors('nombre')} ? 'has-validation'">
+                        <input type="text" id="nombre" maxlength="50" placeholder="Nombre..." required
+                               class="form-control shadow" th:field="*{nombre}" th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid'">
+                        <div class="invalid-feedback ms-1" th:if="${#fields.hasErrors('nombre')}"
+                             th:errors="*{nombre}">error!</div>
+                    </div>
+                </div>
+
+                <div class="col-4 pb-3">
+                    <label class="form-label ms-1" for="email">Email de usuario *</label>
+                    <div class="input-group" th:classappend="${#fields.hasErrors('email')} ? 'has-validation'">
+                        <i class="bi bi-at input-group-text"></i>
+                        <input type="email" id="email" maxlength="50" placeholder="Email..." required
+                               class="form-control shadow" th:field="*{email}" th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'">
+                        <div class="invalid-feedback ms-1" th:if="${#fields.hasErrors('email')}"
+                             th:errors="*{email}">error!</div>
+                    </div>
+                </div>
+
+                <div class="col-2 pb-3">
+                    <label class="form-label ms-1" for="rol">Rol de usuario *</label>
+                    <div class="input-group" th:classappend="${#fields.hasErrors('email')} ? 'has-validation'">
+                        <select class="form-select shadow" id="rol" required
+                                th:field="*{rol}" th:classappend="${#fields.hasErrors('rol')} ? 'is-invalid'">
+                            <option th:each="rolOpt : ${T(es.jmdedios.proyectooneticket.utilities.RolesEnum).values()}" th:value="${rolOpt}" th:text="${rolOpt.descripcion}"></option>
+                        </select>
+                        <div class="invalid-feedback ms-1" th:if="${#fields.hasErrors('rol')}"
+                             th:errors="*{rol}">error!</div>
+                    </div>
+                </div>
+
+            </fieldset>
+            <div class="border-top border-1 d-inline-flex justify-content-end p-2">
+                <div class="btn-group" role="group">
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-check2-circle mx-4"></i></button>
+                    <button type="button" class="btn btn-danger" th:onclick="window.location.href='/admin'"><i class="bi bi-x-circle mx-4"></i></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
