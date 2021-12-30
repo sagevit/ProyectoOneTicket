@@ -2,10 +2,13 @@ package es.jmdedios.proyectooneticket.controller;
 
 import es.jmdedios.proyectooneticket.model.Proyecto;
 import es.jmdedios.proyectooneticket.model.Usuario;
+import es.jmdedios.proyectooneticket.model.UsuarioProyecto;
 import es.jmdedios.proyectooneticket.service.ProyectoService;
+import es.jmdedios.proyectooneticket.service.UsuarioProyectoService;
 import es.jmdedios.proyectooneticket.service.UsuarioService;
 import es.jmdedios.proyectooneticket.utilities.RolesEnum;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -20,13 +23,14 @@ import java.util.Arrays;
 @RequestMapping("proyectos")
 public class ProyectosController {
 
-    private static final int DELAY_PER_ITEM_MS = 100;
-
     @Autowired
     ProyectoService proyectoService;
 
     @Autowired
     UsuarioService usuarioService;
+
+    @Autowired
+    UsuarioProyectoService usuarioProyectoService;
 
     @ModelAttribute("logged")
     public Mono<Usuario> userLogged() {
@@ -34,17 +38,17 @@ public class ProyectosController {
     }
 
     @GetMapping("")
-    public String main(final Model model) {
+    public String main(Authentication auth, final Model model) {
 
         model.addAttribute("rolManager", RolesEnum.MANAGER);
 
-        //userLogged().subscribe(result -> System.out.println(result));
-
-        //Flux<Proyecto> resultado1 = repository.findAll().delayElements(Duration.ofMillis(DELAY_PER_ITEM_MS));
-        //Flux<Proyecto> resultado1 = repository.findByNombreEquals("Proyecto 2");
-        Flux<Proyecto> resultado1 = proyectoService.findAllByIdIn(Arrays.asList("61ccec4b51819e02f99d24fc", "61ccebc8ad00395b381c198c"));
+        /*
+        Flux<Proyecto> resultado1 = proyectoService
+                .findAllByIdIn(usuarioProyectoService.findAllById_usuario(auth.getName()));
         model.addAttribute("proyectos", resultado1);
+         */
 
+        model.addAttribute("proyectos", proyectoService.findAllByIdIn(Arrays.asList("61ce00a2e3727e4cfa1361d6", "61ccebc8ad00395b381c198c")));
         return "proyectos";
     }
 
@@ -65,7 +69,24 @@ public class ProyectosController {
         if (errores.hasErrors()) {
             return "formProyecto";
         }
-        proyectoService.save(proyecto).subscribe();
-        return "redirect:/admin";
+        /* Si el id del proyecto es nulo o es blanco significa que es un alta de proyecto. Entonces
+           se graba el proyecto y el registro de usuario-proyecto para asignárselo al usuario (manager)
+           que lo da de ALTA */
+        if (proyecto.getId() == null || proyecto.getId().isBlank()) {
+            proyectoService
+                    .save(proyecto)
+                    .handle((document, sink) -> {
+                        usuarioProyectoService
+                                .save(new UsuarioProyecto(null, document.getId_manager(), document.getId()))
+                                .subscribe();
+                    })
+                    .subscribe();
+        /* En otro caso es que es una MODIFICACIÓN y se únicamente modifica el proyecto */
+        } else {
+            proyectoService
+                    .save(proyecto)
+                    .subscribe();
+        }
+        return "redirect:/proyectos";
     }
 }

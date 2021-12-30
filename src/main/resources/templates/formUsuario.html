@@ -8,7 +8,7 @@
     <title th:text="'OneTicket - ' + (${usuario.id} ? #{usuario.editar} : #{usuario.nuevo})">OneTicket - ... usuario</title>
 </head>
 <body>
-<div layout:fragment="contenido">
+<th:block layout:fragment="contenido">
     <div class="container bg-light border rounded-3 shadow pt-1 ps-3 pb-3 mt-5">
         <form method="post" action="#" id="formUsuario" role="form" class="row g-3"
               th:action="@{/admin/grabar}" th:object="${usuario}">
@@ -16,13 +16,13 @@
             <fieldset>
                 <legend th:text="${usuario.id} ? #{usuario.editar} : #{usuario.nuevo}"></legend>
 
-                <input type="hidden" th:if="${usuario.id}" th:field="*{id}" id="id" />
+                <input type="hidden" th:if="${usuario.id}" th:field="*{id}" />
 
                 <div class="col-2 pb-3">
-                    <label class="form-label ms-1" for="codigo" th:text="#{usuario.codigo.texto}">código de usuario *</label>
+                    <label class="form-label ms-1 requiredField" for="codigo" th:text="#{usuario.codigo.texto}">código de usuario *</label>
                     <div class="input-group" th:classappend="${#fields.hasErrors('codigo')} ? 'has-validation'">
                         <input type="text" id="codigo" maxlength="18" placeholder="Código..." autofocus required
-                               class="form-control shadow"
+                               class="form-control shadow-sm"
                                th:placeholder="#{codigo.etc}" th:field="*{codigo}"
                                th:classappend="${#fields.hasErrors('codigo')} ? 'is-invalid'">
                         <div class="invalid-feedback ms-1" th:if="${#fields.hasErrors('codigo')}"
@@ -31,10 +31,10 @@
                 </div>
 
                 <div class="col-4 pb-3">
-                    <label class="form-label ms-1" for="nombre" th:text="#{usuario.nombre.texto}">nombre de usuario *</label>
+                    <label class="form-label ms-1 requiredField" for="nombre" th:text="#{usuario.nombre.texto}">nombre de usuario *</label>
                     <div class="input-group" th:classappend="${#fields.hasErrors('nombre')} ? 'has-validation'">
                         <input type="text" id="nombre" maxlength="50" placeholder="Nombre..." required
-                               class="form-control shadow"
+                               class="form-control shadow-sm"
                                th:placeholder="#{nombre.etc}" th:field="*{nombre}"
                                th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid'">
                         <div class="invalid-feedback ms-1" th:if="${#fields.hasErrors('nombre')}"
@@ -43,11 +43,11 @@
                 </div>
 
                 <div class="col-4 pb-3">
-                    <label class="form-label ms-1" for="email" th:text="#{usuario.email.texto}">email de usuario *</label>
+                    <label class="form-label ms-1 requiredField" for="email" th:text="#{usuario.email.texto}">email de usuario *</label>
                     <div class="input-group" th:classappend="${#fields.hasErrors('email')} ? 'has-validation'">
                         <i class="bi bi-at input-group-text"></i>
                         <input type="email" id="email" maxlength="50" placeholder="Email..." required
-                               class="form-control shadow"
+                               class="form-control shadow-sm"
                                th:placeholder="#{email.etc}" th:field="*{email}"
                                th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'">
                         <div class="invalid-feedback ms-1" th:if="${#fields.hasErrors('email')}"
@@ -56,9 +56,9 @@
                 </div>
 
                 <div class="col-2 pb-3">
-                    <label class="form-label ms-1" for="rol" th:text="#{usuario.rol.texto}">rol de usuario *</label>
+                    <label class="form-label ms-1 requiredField" for="rol" th:text="#{usuario.rol.texto}">rol de usuario *</label>
                     <div class="input-group" th:classappend="${#fields.hasErrors('email')} ? 'has-validation'">
-                        <select class="form-select shadow" id="rol" required
+                        <select class="form-select shadow-sm" id="rol" required
                                 th:field="*{rol}" th:classappend="${#fields.hasErrors('rol')} ? 'is-invalid'">
                             <option th:each="rolOpt : ${T(es.jmdedios.proyectooneticket.utilities.RolesEnum).values()}" th:value="${rolOpt}" th:text="${rolOpt.descripcion}"></option>
                         </select>
@@ -76,6 +76,6 @@
             </div>
         </form>
     </div>
-</div>
+</th:block>
 </body>
 </html>

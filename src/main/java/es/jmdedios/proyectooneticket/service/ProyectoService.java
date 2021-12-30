@@ -1,7 +1,6 @@
 package es.jmdedios.proyectooneticket.service;
 
 import es.jmdedios.proyectooneticket.model.Proyecto;
-import es.jmdedios.proyectooneticket.model.Usuario;
 import es.jmdedios.proyectooneticket.repository.IProyectoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

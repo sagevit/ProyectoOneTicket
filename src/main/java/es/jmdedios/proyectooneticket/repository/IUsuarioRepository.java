@@ -11,11 +11,7 @@ import reactor.core.publisher.Mono;
 @EnableReactiveMongoRepositories
 public interface IUsuarioRepository extends ReactiveMongoRepository<Usuario, String> {
 
-    Mono<Usuario> findById (String id);
-
     Mono<Usuario> findByCodigo (String username);
-
-    Flux<Usuario> findAll();
 
     Flux<Usuario> findByNombreContainsIgnoreCase(String nombre);
 

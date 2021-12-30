@@ -24,6 +24,10 @@
                                th:href="@{/proyectos/editar/{id} (id=${proyecto.id})}">
                                 <i class="bi bi-pencil-square me-1 fs-5 text-primary opacity-75"></i>
                             </a>
+                            <a href="#" th:if="${#strings.equals(logged.rol, rolManager)}"
+                               th:href="@{/proyectos/editar/{id} (id=${proyecto.id})}">
+                                <i class="bi bi-person-plus-fill me-1 fs-5 text-primary opacity-75"></i>
+                            </a>
                         </div>
                         <div class="card-body">
                             <div class="card-title" th:text="${proyecto.nombre}">nombre de proyecto</div>
