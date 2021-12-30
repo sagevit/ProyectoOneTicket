@@ -1,10 +1,12 @@
 package es.jmdedios.proyectooneticket.repository;
 
 import es.jmdedios.proyectooneticket.model.Proyecto;
+import es.jmdedios.proyectooneticket.model.Usuario;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -12,13 +14,8 @@ import java.util.List;
 @EnableReactiveMongoRepositories
 public interface IProyectoRepository extends ReactiveMongoRepository<Proyecto, String> {
 
-    //private final ReactiveMongoTemplate template;
+    Mono<Proyecto> findById (String id);
 
-    //@Query(value = "{'proyecto.nombre' : ?0}")
-    //Mono<Proyecto> findProyectosByNombre(String nombre);
-
-    Flux<Proyecto> findByNombreEquals(final String nombre);
-
-    Flux<Proyecto> findByIdIn(final List<String> ids);
+    Flux<Proyecto> findAllByIdIn(List<String> proyectos);
 
 }

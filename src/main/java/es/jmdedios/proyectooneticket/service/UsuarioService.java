@@ -26,16 +26,16 @@ public class UsuarioService {
         return usuarioRepository.findAll();
     }
 
-    public Flux<Usuario> findByNombreContains(String nombre) {
-        return usuarioRepository.findByNombreContains(nombre);
+    public Flux<Usuario> findByNombreContainsIgnoreCase(String nombre) {
+        return usuarioRepository.findByNombreContainsIgnoreCase(nombre);
     }
 
     public Flux<Usuario> findByRol(String rol) {
         return usuarioRepository.findByRol(rol);
     }
 
-    public Flux<Usuario> findByNombreContainsAndRol(String nombre, String rol) {
-        return usuarioRepository.findByNombreContainsAndRol(nombre, rol);
+    public Flux<Usuario> findByNombreContainsIgnoreCaseAndRol(String nombre, String rol) {
+        return usuarioRepository.findByNombreContainsIgnoreCaseAndRol(nombre, rol);
     }
 
     public Mono<Usuario> save(Usuario usuario) {

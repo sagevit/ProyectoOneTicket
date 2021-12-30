@@ -11,7 +11,7 @@
 
     <link rel="shortcut icon" href="../../static/img/favicon.ico" th:href="@{/img/favicon.ico}" type="image/ico" />
 
-    <title layout:title-pattern="$CONTENT_TITLE">One Ticket - IES Francisco de Quevedo </title>
+    <title layout:title-pattern="$CONTENT_TITLE">OneTicket - IES Francisco de Quevedo </title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
@@ -40,9 +40,9 @@
             <div class="d-flex my-auto text-secondary">
                 <span class="align-middle" th:text="'Email: ' + ${logged.email}"></span>
             </div>
-            <div class="d-flex my-auto text-secondary">
-                <span class="align-middle text-primary opacity-75"
-                      th:text="${logged.codigo} != 'admin' ? 'Rol: ' + ${logged.rol.descripcion} : 'Rol: Administrador'"></span>
+            <div class="d-flex my-auto text-success">
+                <span class="align-middle opacity-75"
+                      th:text="'Rol: ' + ${logged.rol.descripcion}"></span>
             </div>
         </div>
 

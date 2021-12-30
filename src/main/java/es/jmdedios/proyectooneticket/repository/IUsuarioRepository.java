@@ -17,10 +17,10 @@ public interface IUsuarioRepository extends ReactiveMongoRepository<Usuario, Str
 
     Flux<Usuario> findAll();
 
-    Flux<Usuario> findByNombreContains(String nombre);
+    Flux<Usuario> findByNombreContainsIgnoreCase(String nombre);
 
     Flux<Usuario> findByRol(String rol);
 
-    Flux<Usuario> findByNombreContainsAndRol(String nombre, String rol);
+    Flux<Usuario> findByNombreContainsIgnoreCaseAndRol(String nombre, String rol);
 
 }

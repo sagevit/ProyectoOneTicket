@@ -32,10 +32,9 @@ public class AdminFilterController {
         Flux<Usuario> resultado = null;
         String valores[] = filtro.split("&");
         if (!valores[0].equals("-") && !valores[1].equals("-")) {
-            //resultado = usuarioService.findByRolAndCodigoContainsOrNombreContains(valores[1], valores[0]);
-            resultado = usuarioService.findByNombreContainsAndRol(valores[0], valores[1]);
+            resultado = usuarioService.findByNombreContainsIgnoreCaseAndRol(valores[0], valores[1]);
         } else if (!valores[0].equals("-") || valores[1].equals("-")) {
-            resultado = usuarioService.findByNombreContains(valores[0]);
+            resultado = usuarioService.findByNombreContainsIgnoreCase(valores[0]);
         } else {
             resultado = usuarioService.findByRol(valores[1]);
         }

@@ -2,6 +2,7 @@ package es.jmdedios.proyectooneticket.controller;
 
 import es.jmdedios.proyectooneticket.model.Usuario;
 import es.jmdedios.proyectooneticket.service.UsuarioService;
+import es.jmdedios.proyectooneticket.utilities.RolesEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -21,11 +22,15 @@ public class MainController {
     }
 
     @GetMapping("/")
-    public String index(Authentication auth) {
-        if (auth.getName().equals("admin")) {
-            return "redirect:/admin";
-        }
-        return "index";
+    public Mono<String> index(Authentication auth) {
+        return usuarioService
+            .findByCodigo(auth.getName())
+            .map(result -> {
+                if (result.getRol().equals(RolesEnum.ADMIN)) {
+                    return "redirect:/admin";
+                } else {
+                    return "redirect:/proyectos";
+                }
+            });
     }
-
 }

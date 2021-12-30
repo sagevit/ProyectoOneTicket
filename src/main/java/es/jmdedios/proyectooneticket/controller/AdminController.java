@@ -26,18 +26,12 @@ public class AdminController {
     }
 
     @GetMapping("")
-    public String index(Authentication auth, final Model model) {
+    public String main(Authentication auth, final Model model) {
         if (!auth.getName().equals("admin")) {
             return "redirect:/";
         }
         model.addAttribute("usuarios", usuarioService.findAll());
         return "admin";
-    }
-
-    @GetMapping("/editar/{id}")
-    public String editar(@PathVariable String id, final Model model) {
-        model.addAttribute("usuario", usuarioService.findById(id));
-        return "formUsuario";
     }
 
     @GetMapping("/nuevo")
@@ -46,8 +40,14 @@ public class AdminController {
         return "formUsuario";
     }
 
+    @GetMapping("/editar/{id}")
+    public String editar(@PathVariable String id, final Model model) {
+        model.addAttribute("usuario", usuarioService.findById(id));
+        return "formUsuario";
+    }
+
     @PostMapping("/grabar")
-    public String submit(@Valid Usuario usuario, Errors errores, final Model model) {
+    public String submit(@Valid Usuario usuario, Errors errores) {
         if (errores.hasErrors()) {
             return "formUsuario";
         }

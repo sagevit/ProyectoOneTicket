@@ -13,3 +13,10 @@ body {
     transform: rotate(0.1turn) !important;
     opacity: 1 !important;
 }
+
+.card-text {
+    width: 379px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}

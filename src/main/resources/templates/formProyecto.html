@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/principal}">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'OneTicket - ' + (${proyecto.id} ? #{proyecto.editar} : #{proyecto.nuevo})">OneTicket - ... proyecto</title>
+</head>
+<body>
+<div layout:fragment="contenido">
+    <div class="container bg-light border rounded-3 shadow pt-1 ps-3 pb-3 mt-5">
+        <form method="post" action="#" id="formProyecto" role="form" class="row g-3"
+              th:action="@{/proyectos/grabar}" th:object="${proyecto}">
+
+            <fieldset>
+                <legend th:text="${proyecto.id} ? #{proyecto.editar} : #{proyecto.nuevo}"></legend>
+
+                <input type="hidden" th:if="${proyecto.id}" th:field="*{id}" id="id" />
+
+                <div class="col-2 pb-3">
+                    <label class="form-label ms-1" for="codigo" th:text="#{proyecto.codigo.texto}">código de proyecto *</label>
+                    <div class="input-group" th:classappend="${#fields.hasErrors('codigo')} ? 'has-validation'">
+                        <input type="text" id="codigo" maxlength="18" placeholder="Código..." autofocus required
+                               class="form-control shadow"
+                               th:placeholder="#{codigo.etc}" th:field="*{codigo}"
+                               th:classappend="${#fields.hasErrors('codigo')} ? 'is-invalid'">
+                        <div class="invalid-feedback ms-1" th:if="${#fields.hasErrors('codigo')}"
+                             th:errors="*{codigo}">error!</div>
+                    </div>
+                </div>
+
+                <div class="col-4 pb-3">
+                    <label class="form-label ms-1" for="nombre" th:text="#{proyecto.nombre.texto}">nombre de proyecto *</label>
+                    <div class="input-group" th:classappend="${#fields.hasErrors('nombre')} ? 'has-validation'">
+                        <input type="text" id="nombre" maxlength="50" placeholder="Nombre..." required
+                               class="form-control shadow"
+                               th:placeholder="#{nombre.etc}" th:field="*{nombre}"
+                               th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid'">
+                        <div class="invalid-feedback ms-1" th:if="${#fields.hasErrors('nombre')}"
+                             th:errors="*{nombre}">error!</div>
+                    </div>
+                </div>
+
+                <div class="col-4 pb-3">
+                    <label class="form-label ms-1" for="descripcion" th:text="#{proyecto.descripcion.texto}">descripción de proyecto</label>
+                    <div class="input-group">
+                        <textarea id="descripcion" maxlength="180" placeholder="Descripción..."
+                               class="form-control shadow" rows="3"
+                               th:placeholder="#{descripcion.etc}" th:field="*{descripcion}">
+                        </textarea>
+                    </div>
+                </div>
+
+            </fieldset>
+            <div class="border-top border-1 d-inline-flex justify-content-end p-2">
+                <div class="btn-group" role="group">
+                    <button type="submit" class="btn btn-success"><i class="bi bi-check2-circle mx-4"></i></button>
+                    <button type="button" class="btn btn-danger" th:onclick="window.location.href='/'"><i class="bi bi-x-circle mx-4"></i></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
