@@ -11,6 +11,14 @@
 <div layout:fragment="contenido">
 
     <div id="listUsuarios">
+
+        <div th:each="encontrado : ${encontrados}">
+            <span th:text="${encontrado.id}">hola!</span>
+            <span th:text="${encontrado.codigo}">hola!</span>
+            <span th:text="${encontrado.nombre}">hola!</span>
+            <span th:text="${encontrado.descripcion}">hola!</span>
+        </div>
+
         <div class="container bg-light border rounded-3 shadow pt-1 ps-3 pb-3 mt-5">
             <div class="row row-cols-3">
                 <!-- Un card por cada proyecto asignado al usuario -->

@@ -17,8 +17,8 @@ public class UsuarioProyecto {
     @Id
     private String id;
 
-    private String id_usuario;
+    private String usuario;
 
-    private String id_proyecto;
+    private String proyecto;
 
 }

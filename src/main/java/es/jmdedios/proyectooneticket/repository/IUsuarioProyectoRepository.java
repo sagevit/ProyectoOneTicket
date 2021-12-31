@@ -10,8 +10,6 @@ import reactor.core.publisher.Flux;
 @EnableReactiveMongoRepositories
 public interface IUsuarioProyectoRepository extends ReactiveMongoRepository<UsuarioProyecto, String> {
 
-    /*
-    Flux<UsuarioProyecto> findById_usuario(String usuario);
-     */
+    Flux<UsuarioProyecto> findByUsuario(String usuario);
 
 }

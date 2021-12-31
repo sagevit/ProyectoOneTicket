@@ -26,12 +26,17 @@ public class AdminController {
     }
 
     @GetMapping("")
-    public String main(Authentication auth, final Model model) {
-        if (!auth.getName().equals("admin")) {
-            return "redirect:/";
-        }
-        model.addAttribute("usuarios", usuarioService.findAll());
-        return "admin";
+    public Mono<String> main(Authentication auth, final Model model) {
+        return usuarioService
+                .findByCodigo(auth.getName())
+                .map(result -> {
+                    if (result.getRol().equals(RolesEnum.ADMIN)) {
+                        model.addAttribute("usuarios", usuarioService.findAll());
+                        return "admin";
+                    } else {
+                        return "redirect:/proyectos";
+                    }
+                });
     }
 
     @GetMapping("/nuevo")

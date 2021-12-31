@@ -7,18 +7,18 @@ import es.jmdedios.proyectooneticket.service.ProyectoService;
 import es.jmdedios.proyectooneticket.service.UsuarioProyectoService;
 import es.jmdedios.proyectooneticket.service.UsuarioService;
 import es.jmdedios.proyectooneticket.utilities.RolesEnum;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
-import java.util.Arrays;
 
+@Slf4j
 @Controller
 @RequestMapping("proyectos")
 public class ProyectosController {
@@ -38,18 +38,18 @@ public class ProyectosController {
     }
 
     @GetMapping("")
-    public String main(Authentication auth, final Model model) {
-
-        model.addAttribute("rolManager", RolesEnum.MANAGER);
-
-        /*
-        Flux<Proyecto> resultado1 = proyectoService
-                .findAllByIdIn(usuarioProyectoService.findAllById_usuario(auth.getName()));
-        model.addAttribute("proyectos", resultado1);
-         */
-
-        model.addAttribute("proyectos", proyectoService.findAllByIdIn(Arrays.asList("61ce00a2e3727e4cfa1361d6", "61ccebc8ad00395b381c198c")));
-        return "proyectos";
+    public Mono<String> main(Authentication auth, final Model model) {
+        return usuarioService
+                .findByCodigo(auth.getName())
+                .map(result -> {
+                    if (result.getRol().equals(RolesEnum.ADMIN)) {
+                        return "redirect:/admin";
+                    } else {
+                        model.addAttribute("rolManager", RolesEnum.MANAGER);
+                        model.addAttribute("proyectos", proyectoService.buscarProyectosUsuario(result.getId()));
+                        return "proyectos";
+                    }
+                });
     }
 
     @GetMapping("/nuevo")
