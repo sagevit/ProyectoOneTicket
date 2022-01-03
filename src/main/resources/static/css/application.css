@@ -15,7 +15,7 @@ body {
 }
 
 .card-text {
-    width: 379px;
+    max-width: 400px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -27,5 +27,6 @@ body {
 }
 
 .btn-flotante {
-    border: 10px solid white;
+    border: 5px solid white !important;
+    border-radius: 10px;
 }

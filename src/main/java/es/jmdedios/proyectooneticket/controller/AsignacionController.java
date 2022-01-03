@@ -43,6 +43,7 @@ public class AsignacionController {
                         return "redirect:/admin";
                     } else {
                         model.addAttribute("idProyecto", id);
+                        model.addAttribute("proyecto", this.proyectoService.findById(id));
                         model.addAttribute("usuariosProyecto", this.proyectoService.buscarUsuariosProyecto(id));
                         model.addAttribute("idsUsersProyecto", this.proyectoService.buscarIdsUsuariosProyecto(id));
                         model.addAttribute("usuariosSistema", this.usuarioService.findByRolNot(RolesEnum.ADMIN.toString()));

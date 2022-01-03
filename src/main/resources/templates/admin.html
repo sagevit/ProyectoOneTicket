@@ -28,9 +28,11 @@
                         </div>
                         <div class="card-body">
                             <div class="card-title" th:text="${usuario.nombre}">nombre de usuario</div>
-                            <div class="card-text text-secondary" th:text="${usuario.email}">email de usuario</div>
-                            <div class="card-text text-success opacity-75 text-end"
-                                 th:text="${usuario.rol.descripcion}">rol de usuario</div>
+                            <div class="d-flex">
+                                <div class="card-text text-secondary me-auto" th:text="${usuario.email}">email de usuario</div>
+                                <div class="card-text text-success opacity-75 text-end"
+                                     th:text="${usuario.rol.descripcion}">rol de usuario</div>
+                            </div>
                         </div>
                     </div>
                 </div>
