@@ -15,31 +15,37 @@ public class UsuarioService {
     IUsuarioRepository usuarioRepository;
 
     public Mono<Usuario> findById(String id) {
-        return usuarioRepository.findById(id);
+        return this.usuarioRepository.findById(id);
     }
 
     public Mono<Usuario> findByCodigo(String username) {
-        return usuarioRepository.findByCodigo(username);
+        return this.usuarioRepository.findByCodigo(username);
     }
 
     public Flux<Usuario> findAll() {
-        return usuarioRepository.findAll();
+        return this.usuarioRepository.findAll();
     }
 
     public Flux<Usuario> findByNombreContainsIgnoreCase(String nombre) {
-        return usuarioRepository.findByNombreContainsIgnoreCase(nombre);
+        return this.usuarioRepository.findByNombreContainsIgnoreCase(nombre);
     }
 
     public Flux<Usuario> findByRol(String rol) {
-        return usuarioRepository.findByRol(rol);
+        return this.usuarioRepository.findByRol(rol);
     }
 
     public Flux<Usuario> findByNombreContainsIgnoreCaseAndRol(String nombre, String rol) {
-        return usuarioRepository.findByNombreContainsIgnoreCaseAndRol(nombre, rol);
+        return this.usuarioRepository.findByNombreContainsIgnoreCaseAndRol(nombre, rol);
+    }
+
+    public Flux<Usuario> findByRolNot(String rol) { return this.usuarioRepository.findByRolNot(rol); }
+
+    public Flux<Usuario> findByNombreContainsIgnoreCaseAndRolNot(String filtro, String rol) {
+        return this.usuarioRepository.findByNombreContainsIgnoreCaseAndRolNot(filtro, rol);
     }
 
     public Mono<Usuario> save(Usuario usuario) {
-        return usuarioRepository.save(usuario);
+        return this.usuarioRepository.save(usuario);
     }
 
     public Mono<Usuario> getUsuario () {

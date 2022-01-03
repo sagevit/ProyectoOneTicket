@@ -19,4 +19,8 @@ public interface IUsuarioRepository extends ReactiveMongoRepository<Usuario, Str
 
     Flux<Usuario> findByNombreContainsIgnoreCaseAndRol(String nombre, String rol);
 
+    Flux<Usuario> findByRolNot(String rol);
+
+    Flux<Usuario> findByNombreContainsIgnoreCaseAndRolNot(String filtro, String rol);
+
 }

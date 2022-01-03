@@ -7,7 +7,6 @@ import es.jmdedios.proyectooneticket.service.ProyectoService;
 import es.jmdedios.proyectooneticket.service.UsuarioProyectoService;
 import es.jmdedios.proyectooneticket.service.UsuarioService;
 import es.jmdedios.proyectooneticket.utilities.RolesEnum;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -18,7 +17,6 @@ import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
 
-@Slf4j
 @Controller
 @RequestMapping("proyectos")
 public class ProyectosController {
@@ -34,12 +32,12 @@ public class ProyectosController {
 
     @ModelAttribute("logged")
     public Mono<Usuario> userLogged() {
-        return usuarioService.getUsuario();
+        return this.usuarioService.getUsuario();
     }
 
     @GetMapping("")
     public Mono<String> main(Authentication auth, final Model model) {
-        return usuarioService
+        return this.usuarioService
                 .findByCodigo(auth.getName())
                 .map(result -> {
                     if (result.getRol().equals(RolesEnum.ADMIN)) {
@@ -60,7 +58,7 @@ public class ProyectosController {
 
     @GetMapping("/editar/{id}")
     public String editar(@PathVariable String id, final Model model) {
-        model.addAttribute("proyecto", proyectoService.findById(id));
+        model.addAttribute("proyecto", this.proyectoService.findById(id));
         return "formProyecto";
     }
 
@@ -73,17 +71,17 @@ public class ProyectosController {
            se graba el proyecto y el registro de usuario-proyecto para asignárselo al usuario (manager)
            que lo da de ALTA */
         if (proyecto.getId() == null || proyecto.getId().isBlank()) {
-            proyectoService
+            this.proyectoService
                     .save(proyecto)
                     .handle((document, sink) -> {
-                        usuarioProyectoService
+                        this.usuarioProyectoService
                                 .save(new UsuarioProyecto(null, document.getId_manager(), document.getId()))
                                 .subscribe();
                     })
                     .subscribe();
         /* En otro caso es que es una MODIFICACIÓN y se únicamente modifica el proyecto */
         } else {
-            proyectoService
+            this.proyectoService
                     .save(proyecto)
                     .subscribe();
         }

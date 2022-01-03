@@ -5,7 +5,6 @@ import lombok.Getter;
 @Getter
 public enum RolesEnum {
 
-    BLANK("Sin rol"),
     ADMIN("Administrador"),
     MANAGER("Manager"),
     DEVELOVER("Desarrollador"),

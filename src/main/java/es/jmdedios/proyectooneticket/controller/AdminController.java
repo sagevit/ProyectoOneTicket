@@ -22,7 +22,7 @@ public class AdminController {
 
     @ModelAttribute("logged")
     public Mono<Usuario> userLogged() {
-        return usuarioService.getUsuario();
+        return this.usuarioService.getUsuario();
     }
 
     @GetMapping("")
@@ -31,7 +31,7 @@ public class AdminController {
                 .findByCodigo(auth.getName())
                 .map(result -> {
                     if (result.getRol().equals(RolesEnum.ADMIN)) {
-                        model.addAttribute("usuarios", usuarioService.findAll());
+                        model.addAttribute("usuarios", this.usuarioService.findAll());
                         return "admin";
                     } else {
                         return "redirect:/proyectos";
@@ -47,7 +47,7 @@ public class AdminController {
 
     @GetMapping("/editar/{id}")
     public String editar(@PathVariable String id, final Model model) {
-        model.addAttribute("usuario", usuarioService.findById(id));
+        model.addAttribute("usuario", this.usuarioService.findById(id));
         return "formUsuario";
     }
 
@@ -56,7 +56,7 @@ public class AdminController {
         if (errores.hasErrors()) {
             return "formUsuario";
         }
-        usuarioService.save(usuario).subscribe();
+        this.usuarioService.save(usuario).subscribe();
         return "redirect:/admin";
     }
 }

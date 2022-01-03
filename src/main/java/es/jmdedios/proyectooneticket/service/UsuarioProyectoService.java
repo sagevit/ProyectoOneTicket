@@ -14,11 +14,19 @@ public class UsuarioProyectoService {
     IUsuarioProyectoRepository usuarioProyectoRepository ;
 
     public Flux<UsuarioProyecto> findByUsuario (String usuario) {
-        return usuarioProyectoRepository.findByUsuario(usuario);
+        return this.usuarioProyectoRepository.findByUsuario(usuario);
+    }
+
+    public Flux<UsuarioProyecto> findByProyecto (String proyecto) {
+        return this.usuarioProyectoRepository.findByProyecto(proyecto);
     }
 
     public Mono<UsuarioProyecto> save(UsuarioProyecto usuarioProyecto) {
-        return usuarioProyectoRepository.save(usuarioProyecto);
+        return this.usuarioProyectoRepository.save(usuarioProyecto);
+    }
+
+    public Mono<Void> deleteByUsuarioAndProyecto(String usuario, String proyecto) {
+        return this.usuarioProyectoRepository.deleteByUsuarioAndProyecto(usuario, proyecto);
     }
 
 }

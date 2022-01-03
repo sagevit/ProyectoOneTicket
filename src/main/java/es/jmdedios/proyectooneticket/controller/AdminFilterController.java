@@ -2,17 +2,13 @@ package es.jmdedios.proyectooneticket.controller;
 
 import es.jmdedios.proyectooneticket.model.Usuario;
 import es.jmdedios.proyectooneticket.service.UsuarioService;
-import es.jmdedios.proyectooneticket.utilities.RolesEnum;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
-
-import javax.validation.Valid;
 
 @Controller
 @RequestMapping("admin/filter")
@@ -23,7 +19,7 @@ public class AdminFilterController {
 
     @GetMapping("")
     public String noFiltrado(Model model) {
-        model.addAttribute("usuarios", usuarioService.findAll());
+        model.addAttribute("usuarios", this.usuarioService.findAll());
         return "admin :: #listUsuarios";
     }
 
@@ -32,11 +28,11 @@ public class AdminFilterController {
         Flux<Usuario> resultado = null;
         String valores[] = filtro.split("&");
         if (!valores[0].equals("-") && !valores[1].equals("-")) {
-            resultado = usuarioService.findByNombreContainsIgnoreCaseAndRol(valores[0], valores[1]);
+            resultado = this.usuarioService.findByNombreContainsIgnoreCaseAndRol(valores[0], valores[1]);
         } else if (!valores[0].equals("-") || valores[1].equals("-")) {
-            resultado = usuarioService.findByNombreContainsIgnoreCase(valores[0]);
+            resultado = this.usuarioService.findByNombreContainsIgnoreCase(valores[0]);
         } else {
-            resultado = usuarioService.findByRol(valores[1]);
+            resultado = this.usuarioService.findByRol(valores[1]);
         }
         model.addAttribute("usuarios", resultado);
         return "admin :: #listUsuarios";

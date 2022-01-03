@@ -25,3 +25,7 @@ body {
     content: " *";
     color: #dc3545;
 }
+
+.btn-flotante {
+    border: 10px solid white;
+}

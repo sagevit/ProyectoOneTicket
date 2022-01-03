@@ -1,16 +1,16 @@
 function filterBarAdmin() {
 
-    var filterCodigo = $('#filterCodigo').val();
+    var filterNombre = $('#filterNombre').val();
     var filterRol = $('#filterRol').val();
-    var url = 'admin/filter'
-    if (filterCodigo || filterRol ){
-        if (!filterCodigo) {
-            filterCodigo = '-';
+    var url = 'admin/filter';
+    if (filterNombre || filterRol ){
+        if (!filterNombre) {
+            filterNombre = '-';
         }
         if (!filterRol) {
             filterRol = '-';
         }
-        url += '/' + filterCodigo + '&' + filterRol;
+        url += '/' + filterNombre + '&' + filterRol;
     }
     $('#listUsuarios').load(url);
 }

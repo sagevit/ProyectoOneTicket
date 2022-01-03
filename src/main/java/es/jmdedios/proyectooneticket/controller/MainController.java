@@ -18,12 +18,12 @@ public class MainController {
 
     @ModelAttribute("logged")
     public Mono<Usuario> userLogged() {
-        return usuarioService.getUsuario();
+        return this.usuarioService.getUsuario();
     }
 
     @GetMapping("/")
     public Mono<String> index(Authentication auth) {
-        return usuarioService
+        return this.usuarioService
             .findByCodigo(auth.getName())
             .map(result -> {
                 if (result.getRol().equals(RolesEnum.ADMIN)) {
