@@ -1,10 +1,9 @@
 package es.jmdedios.proyectooneticket.controller;
 
+import es.jmdedios.proyectooneticket.dtopattern.TicketDTO;
 import es.jmdedios.proyectooneticket.model.Proyecto;
 import es.jmdedios.proyectooneticket.model.Usuario;
-import es.jmdedios.proyectooneticket.model.UsuarioProyecto;
-import es.jmdedios.proyectooneticket.service.ProyectoService;
-import es.jmdedios.proyectooneticket.service.UsuarioProyectoService;
+import es.jmdedios.proyectooneticket.service.TicketService;
 import es.jmdedios.proyectooneticket.service.UsuarioService;
 import es.jmdedios.proyectooneticket.utilities.RolesEnum;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,23 +11,22 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
 import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("proyectos")
-public class ProyectosController {
+@RequestMapping("/tickets")
+public class TicketController {
 
     @Autowired
-    ProyectoService proyectoService;
+    private TicketService ticketService;
 
     @Autowired
     UsuarioService usuarioService;
-
-    @Autowired
-    UsuarioProyectoService usuarioProyectoService;
 
     @ModelAttribute("logged")
     public Mono<Usuario> userLogged() {
@@ -43,31 +41,25 @@ public class ProyectosController {
                     if (result.getRol().equals(RolesEnum.ADMIN)) {
                         return "redirect:/admin";
                     } else {
-                        model.addAttribute("rolManager", RolesEnum.MANAGER);
-                        model.addAttribute("proyectos", proyectoService.buscarProyectosUsuario(result.getId()));
-                        return "proyectos";
+//                        model.addAttribute("rolManager", RolesEnum.MANAGER);
+                        return "tickets";
                     }
                 });
     }
 
     @GetMapping("/nuevo")
     public String nuevo(final Model model) {
-        model.addAttribute("proyecto", new Proyecto());
-        return "formProyecto";
+        model.addAttribute("ticketDTO", new TicketDTO());
+        return "formTicket";
     }
 
-    @GetMapping("/editar/{id}")
-    public String editar(@PathVariable String id, final Model model) {
-        model.addAttribute("proyecto", this.proyectoService.findById(id));
-        return "formProyecto";
-    }
-
-    @PostMapping("/grabar")
-    public String submit(@Valid Proyecto proyecto, Errors errores) {
+    @GetMapping("/grabar")
+    public String submit(@Valid TicketDTO ticketDTO, Errors errores) {
         if (errores.hasErrors()) {
-            return "formProyecto";
+            return "formTicket";
         }
-        this.proyectoService.guardar(proyecto);
-        return "redirect:/proyectos";
+        //this.ticketService.guardar(ticketDTO);
+        return "tickets";
     }
+
 }

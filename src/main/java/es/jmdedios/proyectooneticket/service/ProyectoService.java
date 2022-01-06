@@ -54,6 +54,27 @@ public class ProyectoService {
                 .map(retorno -> retorno.getId());
     }
 
+    public void guardar (final Proyecto proyecto) {
+                /* Si el id del proyecto es nulo o es blanco significa que es un alta de proyecto. Entonces
+           se graba el proyecto y el registro de usuario-proyecto para asignárselo al usuario (manager)
+           que lo da de ALTA */
+        if (proyecto.getId() == null || proyecto.getId().isBlank()) {
+            this.proyectoRepository
+                    .save(proyecto)
+                    .handle((document, sink) -> {
+                        this.usuarioProyectoService
+                                .save(new UsuarioProyecto(null, document.getManagerId(), document.getId()))
+                                .subscribe();
+                    })
+                    .subscribe();
+            /* En otro caso es que es una MODIFICACIÓN y se únicamente modifica el proyecto */
+        } else {
+            this.proyectoRepository
+                    .save(proyecto)
+                    .subscribe();
+        }
+    }
+
     public Mono<Proyecto> save(Proyecto proyecto) {
         return this.proyectoRepository.save(proyecto);
     }

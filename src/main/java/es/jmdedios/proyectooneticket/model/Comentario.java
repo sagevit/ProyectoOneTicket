@@ -1,9 +1,14 @@
 package es.jmdedios.proyectooneticket.model;
 
+import es.jmdedios.proyectooneticket.dtopattern.TicketDTO;
+import es.jmdedios.proyectooneticket.utilities.EstadosEnum;
+import es.jmdedios.proyectooneticket.utilities.PrioridadEnum;
+import es.jmdedios.proyectooneticket.utilities.SituacionesEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -11,29 +16,31 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Document(collection = "proyectos")
-public class Proyecto {
+@Document(collection = "tickets")
+public class Comentario {
 
     @Id
     private String id;
 
-    @Indexed(name="unique_codigo_index", unique = true)
-    @NotNull(message = "{proyecto.codigo.null}")
-    @NotBlank(message = "{proyecto.codigo.blank}")
-    private String codigo;
+    private String ticketId;
 
-    @NotNull(message = "{proyecto.nombre.null}")
-    @NotBlank(message = "{proyecto.nombre.blank}")
-    private String nombre;
+    private EstadosEnum estado;
+
+    private Integer realizado;
 
     private String descripcion;
 
     @Transient
-    private String managerId;
+    public static final String SEQUENCE_NAME = "tickets_sequence";
+
+    public Comentario (TicketDTO ticketDTO) {
+
+    }
 
 }

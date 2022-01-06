@@ -15,13 +15,13 @@ import java.time.Duration;
 
 @Controller
 @RequestMapping("/usuario")
-public class UsuarioController {
+public class UsuarioControllerPruebas {
 
     private IUsuarioRepository repository;
     private static final int DELAY_PER_ITEM_MS = 100;
 
     @Autowired
-    public UsuarioController(IUsuarioRepository repository) {
+    public UsuarioControllerPruebas(IUsuarioRepository repository) {
         this.repository = repository;
     }
 

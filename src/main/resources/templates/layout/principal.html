@@ -27,7 +27,7 @@
 </head>
 <body>
     <!-- Barra superior -->
-    <header>
+    <header class="position-fixed top-0 w-100">
         <!-- Datos del usuario -->
         <div class="container d-flex flex-wrap align-items-center justify-content-between">
             <div class="d-flex my-auto">
@@ -46,7 +46,7 @@
         </div>
 
         <!-- Barra principal -->
-        <div class="bg-primary text-white mb-3 shadow">
+        <div class="bg-primary text-white">
             <div class="container">
                 <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                     <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
@@ -69,15 +69,23 @@
                 </div>
             </div>
         </div>
+
+        <!-- Barra de filtros -->
+        <div class="w-100 border-bottom">
+            <div layout:fragment="filtros">
+                <!-- Aquí irá la barra de filtros -->
+            </div>
+        </div>
+
     </header>
 
-    <main class="mainContainer mb-5">
+    <main class="overflow-auto h-100">
         <div layout:fragment="contenido">
             <!-- Aquí irá el contenido de las distintas páginas -->
         </div>
     </main>
 
-    <footer class="footer position-fixed bottom-0 py-3 bg-primary w-100">
+    <footer class="position-fixed bottom-0 w-100 py-3 bg-primary">
         <div layout:fragment="botonera">
             <!-- Aquí irá la botonera -->
         </div>

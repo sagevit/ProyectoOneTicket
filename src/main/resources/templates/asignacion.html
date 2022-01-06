@@ -5,12 +5,15 @@
       layout:decorate="~{layout/principal}">
 <head>
     <meta charset="UTF-8">
-    <title>OneTicket - Asignación de usuarios</title>
+    <title>OneTicket - [[#{title.asignacion.usuarios}]]</title>
 </head>
 <body>
-<th:block layout:fragment="contenido">
 
+<th:block layout:fragment="filtros">
     <div th:replace="~{fragments/filterbar::filterUsuarios}"></div>
+</th:block>
+
+<th:block layout:fragment="contenido">
 
     <script th:inline="javascript">
         /*<![CDATA[*/
@@ -18,10 +21,9 @@
         /*]]>*/
     </script>
 
-    <div class="container pb-3 mt-5">
+    <div class="container mb-5">
         <div class="d-grid gap-3" style="grid-template-columns: 1fr 2fr;">
-            <div class="bg-light border rounded-3 px-2 py-3">
-
+            <div class="bg-light border rounded-3 p-2">
                 <div class="col pt-3">
                     <div class="card shadow-sm h-100">
                         <div class="card-header d-flex">
@@ -46,18 +48,19 @@
                     </div>
                 </div>
 
-                <div class="list-group pt-5" id="groupUsuariosProyecto">
-                    <div id="listUsuariosProyecto">
+                <div id="groupUsuariosProyecto">
+                    <div id="listUsuariosProyecto" class="list-group shadow-sm mt-4" >
                         <script th:inline="javascript">
                             /*<![CDATA[*/
                             var idsUsersProyecto = /*[[${idsUsersProyecto}]]*/;
                             /*]]>*/
                         </script>
-                        <div class="list-group-item active text-center rounded-top py-1">
-                            <div class="mb-0" th:text="#{usuarios.proyecto}">Usuarios del proyecto</div>
+                        <div class="list-group-item list-group-item-primary text-center rounded-top">
+                            <div class="mb-0 fw-bold" th:text="#{usuarios.asignados.proyecto}">usuarios del proyecto</div>
                         </div>
-                        <div class="list-group-item py-3" th:each="usuarioProyecto : ${usuariosProyecto}">
-                            <div class="mb-0 fw-bold" th:text="${usuarioProyecto.codigo}">codigo de usuario</div>
+                        <div class="list-group-item" th:each="usuarioProyecto : ${usuariosProyecto}">
+                            <i class="bi bi-person-fill me-1"></i>
+                            <strong class="mb-0" th:text="${usuarioProyecto.codigo}">codigo de usuario</strong>
                             <div class="d-flex">
                                 <div class="mb-0 me-auto" th:text="${usuarioProyecto.nombre}">nombre de usuario</div>
                                 <div class="mb-0 opacity-75 text-success" th:text="${usuarioProyecto.rol.descripcion}">rol del usuario</div>
@@ -68,8 +71,7 @@
 
             </div>
 
-            <div class="bg-light border rounded-3 px-2 py-3">
-
+            <div class="bg-light border rounded-3 p-2">
                 <div class="row row-cols-2" id="groupUsuariosSistema">
                     <!-- Un card por cada usuario existente en bd -->
                     <div class="col pt-3" th:each="usuarioSistema : ${usuariosSistema}" id="listUsuariosSistema">

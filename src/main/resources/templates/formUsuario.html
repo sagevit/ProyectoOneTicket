@@ -9,14 +9,14 @@
 </head>
 <body>
 <th:block layout:fragment="contenido">
-    <div class="container bg-light border rounded-3 shadow pt-1 ps-3 pb-3 mt-5">
-        <form method="post" action="#" id="formUsuario" role="form" class="row"
+    <div class="container bg-light border rounded-3 shadow p-2 mt-5">
+        <form method="post" action="#" id="formUsuario" role="form" class="row p-2"
               th:action="@{/admin/grabar}" th:object="${usuario}">
+
+            <input type="hidden" th:if="${usuario.id}" th:field="*{id}" />
 
             <fieldset>
                 <legend th:text="${usuario.id} ? #{usuario.editar} : #{usuario.nuevo}"></legend>
-
-                <input type="hidden" th:if="${usuario.id}" th:field="*{id}" />
 
                 <div class="col-2 pb-3">
                     <label class="form-label ms-1 requiredField" for="codigo" th:text="#{usuario.codigo.texto}">código de usuario *</label>
@@ -68,13 +68,17 @@
                 </div>
 
             </fieldset>
-            <div class="border-top border-1 d-inline-flex justify-content-end p-2">
-                <div class="btn-group" role="group">
-                    <button type="submit" class="btn btn-success"><i class="bi bi-check2-circle mx-4"></i></button>
-                    <button type="button" class="btn btn-danger" th:onclick="window.location.href='/admin'"><i class="bi bi-x-circle mx-4"></i></button>
-                </div>
-            </div>
         </form>
+    </div>
+</th:block>
+<th:block layout:fragment="botonera">
+    <div class="container">
+        <div class="position-absolute top-0 start-50 translate-middle">
+            <div class="btn-group btn-flotante" role="group">
+                <button type="submit" class="btn btn-success" form="formUsuario"><i class="bi bi-check2-circle mx-4"></i></button>
+                <button type="button" class="btn btn-danger" th:onclick="window.location.href='/admin'"><i class="bi bi-x-circle mx-4"></i></button>
+            </div>
+        </div>
     </div>
 </th:block>
 </body>

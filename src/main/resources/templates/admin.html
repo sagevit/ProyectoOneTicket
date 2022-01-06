@@ -5,15 +5,18 @@
       layout:decorate="~{layout/principal}">
 <head>
     <meta charset="UTF-8">
-    <title>OneTicket - Administración</title>
+    <title>OneTicket - [[#{administracion}]]</title>
 </head>
 <body>
-<div layout:fragment="contenido">
 
+<th:block layout:fragment="filtros">
     <div th:replace="~{fragments/filterbar::filterAdmin}"></div>
+</th:block>
 
-    <div id="listUsuarios">
-        <div class="container bg-light border rounded-3 shadow pt-1 ps-3 pb-3 mt-5">
+<th:block layout:fragment="contenido">
+
+    <div id="listUsuarios" class="container mb-5">
+        <div class="bg-light border rounded-3 p-2">
             <div class="row row-cols-3">
                 <!-- Un card por cada usuario existente en bd -->
                 <div class="col pt-3" th:each="usuario : ${usuarios}">
@@ -23,7 +26,7 @@
                             <strong class="me-auto" th:text="${usuario.codigo}">código de usuario</strong>
                             <!-- El único que no se puede editar es el usuario admin -->
                             <a href="#" th:if="${usuario.codigo} != 'admin'" th:href="@{/admin/editar/{id} (id=${usuario.id})}">
-                                <i class="bi bi-pencil-square me-1 fs-5 text-primary opacity-75" ></i>
+                                <i class="bi bi-pencil-square me-1 fs-5" ></i>
                             </a>
                         </div>
                         <div class="card-body">
@@ -53,6 +56,6 @@
             </div>
         </div>
     </div>
-</div>
+</th:block>
 </body>
 </html>

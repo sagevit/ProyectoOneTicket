@@ -3,16 +3,15 @@ package es.jmdedios.proyectooneticket.utilities;
 import lombok.Getter;
 
 @Getter
-public enum RolesEnum {
+public enum PrioridadEnum {
 
-    ADMIN("Administrador"),
-    MANAGER("Manager"),
-    DEVELOVER("Desarrollador"),
-    USER("Usuario");
+    BAJA("Baja"),
+    NORMAL("Normal"),
+    ALTA("Alta");
 
     private String descripcion;
 
-    RolesEnum(String descripcion) {
+    PrioridadEnum(String descripcion) {
         this.descripcion = descripcion;
     }
 

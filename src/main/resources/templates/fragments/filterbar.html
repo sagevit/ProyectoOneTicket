@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
 </head>
 <body>
-<div th:fragment="filterAdmin" class="border-bottom pb-3">
+<div th:fragment="filterAdmin">
     <div class="container">
-        <div class="row">
+        <div class="row my-1">
             <div class="col-2">
-                <input type="search" id="filterNombre" class="form-control shadow col-2" placeholder="Filtrar por..."
+                <input type="search" id="filterNombre" class="form-control col-2" placeholder="Filtrar por..."
                        th:placeholder="#{filtrar.por.nombre}"
                        th:onblur="|javascript:filterBarAdmin()|">
             </div>
             <div class="col-2">
-                <select id="filterRol" class="form-select shadow col-2" th:placeholder="#{filtrar.por.rol}"
+                <select id="filterRol" class="form-select col-2" th:placeholder="#{filtrar.por.rol}"
                         th:onchange="|javascript:filterBarAdmin()|">
                     <option selected value="">...</option>
                     <option th:each="rolOpt : ${T(es.jmdedios.proyectooneticket.utilities.RolesEnum).values()}"
@@ -26,11 +26,11 @@
     <script type="text/javascript" src="../../static/js/filterBarAdmin.js" th:src="@{/js/filterBarAdmin.js}"></script>
 </div>
 
-<div th:fragment="filterUsuarios" class="border-bottom pb-3">
+<div th:fragment="filterUsuarios">
     <div class="container">
-        <div class="row">
+        <div class="row my-1">
             <div class="col-2">
-                <input type="search" id="filterUsuario" class="form-control shadow col-2" placeholder="Filtrar por..."
+                <input type="search" id="filterUsuario" class="form-control col-2" placeholder="Filtrar por..."
                        th:placeholder="#{filtrar.por.nombre}"
                        th:onblur="filterBarUsuarios([[${idProyecto}]])">
             </div>
