@@ -5,63 +5,81 @@
       layout:decorate="~{layout/principal}">
 <head>
     <meta charset="UTF-8">
-    <title th:text="'OneTicket - ' + (${proyecto.id} ? #{proyecto.editar} : #{proyecto.nuevo})">OneTicket - ... proyecto</title>
+    <title>OneTicket - [[#{title.ticket.creacion}]]</title>
 </head>
 <body>
 <th:block layout:fragment="contenido">
-    <div class="container bg-light border rounded-3 shadow p-2 mt-5">
-        <form method="post" action="#" id="formProyecto" role="form" class="row p-2"
-              th:action="@{/proyectos/grabar}" th:object="${proyecto}">
+    <div class="container bg-light border rounded-3 shadow p-2" th:with="submitURL='/tickets/'+${ticketDTO.proyectoId}+'/grabar'">
+        <form method="post" action="#" id="formTicket" role="form" class="row p-2"
+              th:action="@{|${submitURL}|}" th:object="${ticketDTO}">
 
             <fieldset>
-                <legend th:text="${proyecto.id} ? #{proyecto.editar} : #{proyecto.nuevo}"></legend>
+                <legend th:text="#{title.ticket.creacion}"></legend>
 
-                <input type="hidden" th:if="${proyecto.id}" th:field="*{id}" />
-                <input type="hidden" th:unless="${proyecto.id}" th:attr="name='id_manager'" th:value="${logged.id}" />
+                <input type="hidden" th:attr="name='proyectoId'" th:value="${ticketDTO.proyectoId}" />
+                <input type="hidden" th:attr="name='estado'" th:value="${ticketDTO.estado}" />
+                <input type="hidden" th:attr="name='propietarioId'" th:value="${logged.id}" />
+
+                <div class="col-4 pb-3">
+                    <label class="form-label ms-1 requiredField" for="asunto" th:text="#{ticket.asunto.texto}">asunto *</label>
+                    <div class="input-group" th:classappend="${#fields.hasErrors('asunto')} ? 'has-validation'">
+                        <input type="text" id="asunto" maxlength="50" placeholder="Asunto..." autofocus required
+                               class="form-control shadow-sm"
+                               th:placeholder="#{asunto.etc}" th:field="*{asunto}"
+                               th:classappend="${#fields.hasErrors('asunto')} ? 'is-invalid'">
+                        <div class="invalid-feedback ms-1" th:if="${#fields.hasErrors('asunto')}"
+                             th:errors="*{asunto}">error!</div>
+                    </div>
+                </div>
 
                 <div class="col-2 pb-3">
-                    <label class="form-label ms-1 requiredField" for="codigo" th:text="#{proyecto.codigo.texto}">código de proyecto *</label>
-                    <div class="input-group" th:classappend="${#fields.hasErrors('codigo')} ? 'has-validation'">
-                        <input type="text" id="codigo" maxlength="18" placeholder="Código..." autofocus required
-                               class="form-control shadow-sm" spellcheck="false"
-                               th:placeholder="#{codigo.etc}" th:field="*{codigo}"
-                               th:classappend="${#fields.hasErrors('codigo')} ? 'is-invalid'">
-                        <div class="invalid-feedback ms-1" th:if="${#fields.hasErrors('codigo')}"
-                             th:errors="*{codigo}">error!</div>
+                    <label class="form-label ms-1 requiredField" for="tipo" th:text="#{ticket.tipo.texto}">tipo *</label>
+                    <div class="input-group" th:classappend="${#fields.hasErrors('tipo')} ? 'has-validation'">
+                        <select class="form-select shadow-sm" id="tipo" required
+                                th:field="*{tipo}" th:classappend="${#fields.hasErrors('tipo')} ? 'is-invalid'">
+                            <option th:each="tipoOpt : ${tipos}" th:value="${tipoOpt}" th:text="${tipoOpt.descripcion}"></option>
+                        </select>
+                        <div class="invalid-feedback ms-1" th:if="${#fields.hasErrors('tipo')}"
+                             th:errors="*{tipo}">error!</div>
                     </div>
                 </div>
 
-                <div class="col-4 pb-3">
-                    <label class="form-label ms-1 requiredField" for="nombre" th:text="#{proyecto.nombre.texto}">nombre de proyecto *</label>
-                    <div class="input-group" th:classappend="${#fields.hasErrors('nombre')} ? 'has-validation'">
-                        <input type="text" id="nombre" maxlength="50" placeholder="Nombre..." required
-                               class="form-control shadow-sm" spellcheck="false"
-                               th:placeholder="#{nombre.etc}" th:field="*{nombre}"
-                               th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid'">
-                        <div class="invalid-feedback ms-1" th:if="${#fields.hasErrors('nombre')}"
-                             th:errors="*{nombre}">error!</div>
+                <div class="col-2 pb-3">
+                    <label class="form-label ms-1 requiredField" for="prioridad" th:text="#{ticket.prioridad.texto}">prioridad *</label>
+                    <div class="input-group" th:classappend="${#fields.hasErrors('prioridad')} ? 'has-validation'">
+                        <select class="form-select shadow-sm" id="prioridad" required
+                                th:field="*{prioridad}" th:classappend="${#fields.hasErrors('prioridad')} ? 'is-invalid'">
+                            <option th:each="prioridadOpt : ${prioridades}" th:value="${prioridadOpt}" th:text="${prioridadOpt.descripcion}"></option>
+                        </select>
+                        <div class="invalid-feedback ms-1" th:if="${#fields.hasErrors('prioridad')}"
+                             th:errors="*{prioridad}">error!</div>
                     </div>
                 </div>
 
-                <div class="col-4 pb-3">
-                    <label class="form-label ms-1" for="descripcion" th:text="#{proyecto.descripcion.texto}">descripción de proyecto</label>
-                    <div class="input-group">
-                        <textarea id="descripcion" maxlength="180" placeholder="Descripción..."
-                               class="form-control shadow-sm" rows="3"
-                               th:placeholder="#{descripcion.etc}" th:field="*{descripcion}">
+                <div class="col-12 pb-3">
+                    <label class="form-label ms-1 requiredField" for="descripcion" th:text="#{ticket.descripcion.texto}">descripción del ticket *</label>
+                    <div class="input-group" th:classappend="${#fields.hasErrors('descripcion')} ? 'has-validation'">
+                        <textarea id="descripcion" maxlength="1024" class="form-control shadow-sm" rows="5" required
+                                  th:placeholder="#{descripcion.etc}" th:field="*{descripcion}"
+                                  th:classappend="${#fields.hasErrors('descripcion')} ? 'is-invalid'">
                         </textarea>
+                        <div class="invalid-feedback ms-1" th:if="${#fields.hasErrors('descripcion')}"
+                             th:errors="*{descripcion}">error!</div>
                     </div>
                 </div>
 
             </fieldset>
-            <hr>
-            <div class="d-inline-flex justify-content-end">
-                <div class="btn-group" role="group">
-                    <button type="submit" class="btn btn-success"><i class="bi bi-check2-circle mx-4"></i></button>
-                    <button type="button" class="btn btn-danger" th:onclick="window.location.href='/proyectos'"><i class="bi bi-x-circle mx-4"></i></button>
-                </div>
-            </div>
         </form>
+    </div>
+</th:block>
+<th:block layout:fragment="botonera">
+    <div class="container">
+        <div class="position-absolute top-0 start-50 translate-middle">
+            <div class="btn-group btn-flotante" role="group" th:with="cancelURL='/tickets/'+${ticketDTO.proyectoId}">
+                <button type="submit" class="btn btn-success" form="formTicket"><i class="bi bi-check2-circle mx-4"></i></button>
+                <button type="button" class="btn btn-danger" th:onclick="window.location.href=[[${cancelURL}]]"><i class="bi bi-x-circle mx-4"></i></button>
+            </div>
+        </div>
     </div>
 </th:block>
 </body>

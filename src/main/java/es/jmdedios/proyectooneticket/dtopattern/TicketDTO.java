@@ -2,7 +2,6 @@ package es.jmdedios.proyectooneticket.dtopattern;
 
 import es.jmdedios.proyectooneticket.utilities.EstadosEnum;
 import es.jmdedios.proyectooneticket.utilities.PrioridadEnum;
-import es.jmdedios.proyectooneticket.utilities.SituacionesEnum;
 import es.jmdedios.proyectooneticket.utilities.TiposEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -25,16 +24,15 @@ public class TicketDTO {
 
     @NotNull(message = "{proyecto.codigo.null}")
     @NotBlank(message = "{proyecto.codigo.blank}")
-    private String proyecto;
+    private String proyectoId;
 
-    private long secuencia;
+//    private long secuencia;
+
+    private boolean asignada;
 
     @NotNull(message = "{ticket.asunto.null}")
     @NotBlank(message = "{ticket.asunto.blank}")
     private String asunto;
-
-    @NotNull(message = "{ticket.situacion.null}")
-    private SituacionesEnum situacion;
 
     @NotNull(message = "{ticket.tipo.null}")
     private TiposEnum tipo;
@@ -47,19 +45,17 @@ public class TicketDTO {
 
     private Integer realizado;
 
-    private LocalDateTime fechaCreacion;
+    private Date fechaCreacion;
 
-    private LocalDateTime fechaFinalizacion;
+    private Date fechaFinalizacion;
 
     //Usuario de creación (manager y usuario)
     @NotNull(message = "{ticket.propietario.null")
     @NotBlank(message = "{ticket.propietario.blak}")
-    private String propietario;
+    private String propietarioId;
 
     //Usuario asignado (manager y developer)
-    @NotNull(message = "{ticket.asignado.null")
-    @NotBlank(message = "{ticket.asignado.blak}")
-    private String asignado;
+    private String asignadoId;
 
     private String comentarioId;
 

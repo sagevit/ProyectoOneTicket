@@ -5,10 +5,11 @@ import lombok.Getter;
 @Getter
 public enum TiposEnum {
 
-    TAREA("Tarea"),
+    SOPORTE("Soporte"),
     ERRORES("Errores"),
+    TAREA("Tarea"),
     PETICION("Petición"),
-    SOPORTE("Soporte");
+    EVOLUTIVO("Evolutivo");
 
     private String descripcion;
 

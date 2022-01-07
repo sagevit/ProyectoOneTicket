@@ -55,7 +55,7 @@ public class ProyectoService {
     }
 
     public void guardar (final Proyecto proyecto) {
-                /* Si el id del proyecto es nulo o es blanco significa que es un alta de proyecto. Entonces
+        /* Si el id del proyecto es nulo o es blanco significa que es un alta de proyecto. Entonces
            se graba el proyecto y el registro de usuario-proyecto para asignárselo al usuario (manager)
            que lo da de ALTA */
         if (proyecto.getId() == null || proyecto.getId().isBlank()) {
