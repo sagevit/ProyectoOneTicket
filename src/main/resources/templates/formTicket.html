@@ -37,7 +37,8 @@
                     <div class="input-group" th:classappend="${#fields.hasErrors('tipo')} ? 'has-validation'">
                         <select class="form-select shadow-sm" id="tipo" required
                                 th:field="*{tipo}" th:classappend="${#fields.hasErrors('tipo')} ? 'is-invalid'">
-                            <option th:each="tipoOpt : ${tipos}" th:value="${tipoOpt}" th:text="${tipoOpt.descripcion}"></option>
+                            <option th:each="tipoOpt : ${T(es.jmdedios.proyectooneticket.utilities.TiposEnum).values()}"
+                                    th:value="${tipoOpt}" th:text="${tipoOpt.descripcion}"></option>
                         </select>
                         <div class="invalid-feedback ms-1" th:if="${#fields.hasErrors('tipo')}"
                              th:errors="*{tipo}">error!</div>
@@ -49,7 +50,8 @@
                     <div class="input-group" th:classappend="${#fields.hasErrors('prioridad')} ? 'has-validation'">
                         <select class="form-select shadow-sm" id="prioridad" required
                                 th:field="*{prioridad}" th:classappend="${#fields.hasErrors('prioridad')} ? 'is-invalid'">
-                            <option th:each="prioridadOpt : ${prioridades}" th:value="${prioridadOpt}" th:text="${prioridadOpt.descripcion}"></option>
+                            <option th:each="prioridadOpt : ${T(es.jmdedios.proyectooneticket.utilities.PrioridadEnum).values()}"
+                                    th:value="${prioridadOpt}" th:text="${prioridadOpt.descripcion}"></option>
                         </select>
                         <div class="invalid-feedback ms-1" th:if="${#fields.hasErrors('prioridad')}"
                              th:errors="*{prioridad}">error!</div>
@@ -65,6 +67,17 @@
                         </textarea>
                         <div class="invalid-feedback ms-1" th:if="${#fields.hasErrors('descripcion')}"
                              th:errors="*{descripcion}">error!</div>
+                    </div>
+                </div>
+
+                <div class="col-4 pb-3" th:if="${#strings.equals(logged.rol, rolManager)}">
+                    <label class="form-label ms-1" for="asignado" th:text="#{ticket.asignado.texto}">asignar al usuario</label>
+                    <div class="input-group">
+                        <select class="form-select shadow-sm" id="asignado" th:field="*{asignadoId}">
+                            <option selected value="">...</option>
+                            <option th:each="usuarioOpt : ${usuariosAsignables}"
+                                    th:value="${usuarioOpt.id}" th:text="${usuarioOpt.nombre}"></option>
+                        </select>
                     </div>
                 </div>
 

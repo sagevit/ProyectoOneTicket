@@ -7,7 +7,7 @@ public enum RolesEnum {
 
     ADMIN("Administrador"),
     MANAGER("Manager"),
-    DEVELOVER("Desarrollador"),
+    DEVELOPER("Desarrollador"),
     USER("Usuario");
 
     private String descripcion;

@@ -5,32 +5,19 @@
       layout:decorate="~{layout/principal}">
 <head>
     <meta charset="UTF-8">
-    <title>OneTicket - [[#{title.proyecto}]]</title>
+    <title>OneTicket - [[#{title.ticket}]]</title>
 </head>
 <body>
-<div layout:fragment="contenido">
+<th:block layout:fragment="contenido">
 
-    <div id="listUsuarios">
-
-        <div class="container bg-light border rounded-3 p-2">
-            <div class="row row-cols-3">
-                <!-- Un card por cada proyecto asignado al usuario -->
-                <div class="col pt-3" th:each="proyecto : ${proyectos}">
-                    <div class="card shadow-sm h-100">
+    <div class="container mb-5">
+        <div class="d-grid gap-3" style="grid-template-columns: 1fr 2fr;">
+            <div class="bg-light border rounded-3 p-2">
+                <div class="col pb-2">
+                    <div class="card shadow-sm h-100 disabled">
                         <div class="card-header d-flex">
-                            <a href="#" class="me-auto text-decoration-none">
-                                <i class="bi bi-diagram-3-fill me-1"></i>
-                                <strong th:text="${proyecto.codigo}">código de proyecto</strong>
-                            </a>
-                            <!-- Solo puede editar los proyectos el usuario manager -->
-                            <a href="#" th:if="${#strings.equals(logged.rol, rolManager)}"
-                               th:href="@{/proyectos/editar/{id} (id=${proyecto.id})}">
-                                <i class="bi bi-pencil-square me-1 fs-5 me-2"></i>
-                            </a>
-                            <a href="#" th:if="${#strings.equals(logged.rol, rolManager)}"
-                               th:href="@{/proyectos/asignacion/{id} (id=${proyecto.id})}">
-                                <i class="bi bi-person-plus-fill me-1 fs-5 me-2"></i>
-                            </a>
+                            <i class="bi bi-diagram-3-fill me-1"></i>
+                            <strong class="me-auto" th:text="${proyecto.codigo}">código de proyecto</strong>
                         </div>
                         <div class="card-body">
                             <div class="card-title" th:text="${proyecto.nombre}">nombre de proyecto</div>
@@ -41,22 +28,51 @@
                     </div>
                 </div>
 
-                <!-- Elemento + para dar de alta proyectos -->
-                <div th:if="${#strings.equals(logged.rol, rolManager)}">
-                    <div class="col pt-3">
-                        <a class="text-decoration-none" th:href="@{/proyectos/nuevo/}">
-                            <div class="card shadow-sm h-100">
-                                <div class="card-header text-secondary fst-italic">Nuevo proyecto</div>
-                                <div class="card-body text-primary text-center">
-                                    <i class="bi bi-node-plus-fill display-3 opacity-25"></i>
-                                </div>
+                <th:block th:if="${#strings.equals(logged.rol, rolManager)}">
+                    <!-- Card de título -->
+                    <div class="card shadow-sm disabled list-group-item-primary">
+                        <div class="card-body row p-1">
+                            <strong class="card-text text-center" th:text="#{tickets.pendientes.asignar}">tickets pendientes de asignar</strong>
+                        </div>
+                    </div>
+                    <!-- Un card por cada ticket existente en bd -->
+                    <div th:each="ticket : ${ticketsNoAsignados}">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body row p-1">
+                                <div class="card-text col-2" th:text="'#'+${ticket.secuencia}"># de ticket</div>
+                                <div class="card-text col-10" th:text="${ticket.asunto}">asunto</div>
                             </div>
-                        </a>
+                        </div>
+                    </div>
+                </th:block>
+            </div>
+
+            <div class="bg-light border rounded-3 p-2">
+                <!-- Un card por cada ticket existente en bd -->
+                <div th:each="ticket : ${ticketsAsignados}">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body row p-1">
+                            <div class="card-text col-1" th:text="'#'+${ticket.secuencia}"># de ticket</div>
+                            <div class="card-text col-6" th:text="${ticket.asunto}">asunto</div>
+                            <div class="card-text col-3" th:text="${ticket.estado.descripcion}">estado</div>
+                            <div class="card-text col-2" th:text="${ticket.realizado}+'%'">realizado</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</th:block>
+<th:block layout:fragment="botonera">
+    <div class="container">
+        <div class="position-absolute top-0 start-50 translate-middle">
+            <div class="btn-group btn-flotante" role="group">
+                <button type="button" class="btn btn-primary" th:onclick="window.location.href='/proyectos'">
+                    <i class="bi bi-arrow-return-left mx-4"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</th:block>
 </body>
 </html>

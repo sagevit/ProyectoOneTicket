@@ -9,7 +9,7 @@ body {
     padding-top: 85px;
 }
 
-.card:hover {
+.card:not(.disabled):hover {
     box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
     transform: scale(1.02) !important;
 }

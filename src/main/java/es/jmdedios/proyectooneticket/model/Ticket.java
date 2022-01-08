@@ -69,13 +69,18 @@ public class Ticket {
 
     public Ticket (TicketDTO ticketDTO) {
         this.proyectoId = ticketDTO.getProyectoId();
-        this.asignada = false;
         this.asunto = ticketDTO.getAsunto();
         this.tipo = ticketDTO.getTipo();
         this.estado = ticketDTO.getEstado();
         this.prioridad = ticketDTO.getPrioridad();
         this.realizado = 0;
         this.propietarioId = ticketDTO.getPropietarioId();
+        if (ticketDTO.getAsignadoId().isBlank()) {
+            this.asignada = false;
+        } else {
+            this.asignada = true;
+            this.asignadoId = ticketDTO.getAsignadoId();
+        }
         this.fechaCreacion = new Date();
     }
 

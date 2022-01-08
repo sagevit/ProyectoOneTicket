@@ -8,17 +8,18 @@
     <title>OneTicket - [[#{title.proyecto}]]</title>
 </head>
 <body>
-<div layout:fragment="contenido">
+<th:block layout:fragment="contenido">
 
     <div id="listUsuarios">
 
         <div class="container bg-light border rounded-3 p-2">
             <div class="row row-cols-3">
                 <!-- Un card por cada proyecto asignado al usuario -->
-                <div class="col pt-3" th:each="proyecto : ${proyectos}">
+                <div class="col pb-2" th:each="proyecto : ${proyectos}">
                     <div class="card shadow-sm h-100">
                         <div class="card-header d-flex">
-                            <a href="#" class="me-auto text-decoration-none">
+                            <a href="#" class="me-auto text-decoration-none"
+                               th:href="@{/tickets/{id} (id=${proyecto.id})}">
                                 <i class="bi bi-diagram-3-fill me-1"></i>
                                 <strong th:text="${proyecto.codigo}">código de proyecto</strong>
                             </a>
@@ -43,7 +44,7 @@
 
                 <!-- Elemento + para dar de alta proyectos -->
                 <div th:if="${#strings.equals(logged.rol, rolManager)}">
-                    <div class="col pt-3">
+                    <div class="col pb-2">
                         <a class="text-decoration-none" th:href="@{/proyectos/nuevo/}">
                             <div class="card shadow-sm h-100">
                                 <div class="card-header text-secondary fst-italic">Nuevo proyecto</div>
@@ -57,6 +58,6 @@
             </div>
         </div>
     </div>
-</div>
+</th:block>
 </body>
 </html>

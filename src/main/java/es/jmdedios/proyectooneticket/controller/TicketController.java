@@ -2,6 +2,7 @@ package es.jmdedios.proyectooneticket.controller;
 
 import es.jmdedios.proyectooneticket.dtopattern.TicketDTO;
 import es.jmdedios.proyectooneticket.model.Usuario;
+import es.jmdedios.proyectooneticket.service.ProyectoService;
 import es.jmdedios.proyectooneticket.service.TicketService;
 import es.jmdedios.proyectooneticket.service.UsuarioService;
 import es.jmdedios.proyectooneticket.utilities.EstadosEnum;
@@ -28,6 +29,9 @@ public class TicketController {
     @Autowired
     UsuarioService usuarioService;
 
+    @Autowired
+    ProyectoService proyectoService;
+
     @ModelAttribute("logged")
     public Mono<Usuario> userLogged() {
         return this.usuarioService.getUsuario();
@@ -41,20 +45,34 @@ public class TicketController {
                     if (result.getRol().equals(RolesEnum.ADMIN)) {
                         return "redirect:/admin";
                     } else {
-//                        model.addAttribute("rolManager", RolesEnum.MANAGER);
+                        model.addAttribute("rolManager", RolesEnum.MANAGER);
+                        model.addAttribute("proyecto", this.proyectoService.findById(proyectoId));
+                        //TODO: solo buscar los tickets no asignados cuando el usuario sea Manager
+                        model.addAttribute("ticketsNoAsignados", this.ticketService
+                                .findAllByProyectoIdAndAsignadaOrderBySecuenciaDesc(proyectoId, false));
+                        model.addAttribute("ticketsAsignados", this.ticketService
+                                .findAllByProyectoIdAndAsignadoIdAndAsignadaOrderBySecuenciaDesc(proyectoId, result.getId(), true));
                         return "tickets";
                     }
                 });
     }
 
     @GetMapping("{proyectoId}/nuevo")
-    public String nuevo(@PathVariable String proyectoId, final Model model) {
+    public String nuevo(@PathVariable String proyectoId, Authentication auth, final Model model) {
+
         TicketDTO ticketDTO = new TicketDTO();
         ticketDTO.setProyectoId(proyectoId);
         ticketDTO.setEstado(EstadosEnum.INICIAL);
+
+        model.addAttribute("rolManager", RolesEnum.MANAGER);
         model.addAttribute("ticketDTO", ticketDTO);
         model.addAttribute("tipos", TiposEnum.values());
         model.addAttribute("prioridades", PrioridadEnum.values());
+        model.addAttribute("usuariosAsignables", null);
+
+        //TODO: solo buscar los usuarios cuando el usuario sea Manager
+        model.addAttribute("usuariosAsignables", this.ticketService.buscarManagersOrDevelopersProyecto(proyectoId));
+
         return "formTicket";
     }
 
