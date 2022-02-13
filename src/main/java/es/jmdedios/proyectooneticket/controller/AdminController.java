@@ -11,6 +11,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
+import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 
 @Controller

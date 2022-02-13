@@ -10,6 +10,7 @@ body {
 }
 
 .card:not(.disabled):hover {
+    background-color: whitesmoke;
     box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
     transform: scale(1.02) !important;
 }
@@ -21,10 +22,6 @@ body {
     overflow: hidden;
 }
 
-.list-group:hover {
-    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
-    transform: scale(1.02) !important;
-}
 .requiredField::after {
     content: " *";
     color: #dc3545;

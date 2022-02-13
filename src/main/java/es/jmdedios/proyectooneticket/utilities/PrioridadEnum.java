@@ -7,7 +7,8 @@ public enum PrioridadEnum {
 
     BAJA("Baja"),
     NORMAL("Normal"),
-    ALTA("Alta");
+    ALTA("Alta"),
+    URGENTE("Urgente");
 
     private String descripcion;
 

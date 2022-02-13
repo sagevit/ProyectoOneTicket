@@ -2,7 +2,6 @@ package es.jmdedios.proyectooneticket.controller;
 
 import es.jmdedios.proyectooneticket.model.Proyecto;
 import es.jmdedios.proyectooneticket.model.Usuario;
-import es.jmdedios.proyectooneticket.model.UsuarioProyecto;
 import es.jmdedios.proyectooneticket.service.ProyectoService;
 import es.jmdedios.proyectooneticket.service.UsuarioProyectoService;
 import es.jmdedios.proyectooneticket.service.UsuarioService;

@@ -10,7 +10,7 @@ import reactor.core.publisher.Flux;
 @EnableReactiveMongoRepositories
 public interface ITicketRepository extends ReactiveMongoRepository<Ticket, String> {
 
-    Flux<Ticket> findAllByProyectoIdAndAsignadaOrderBySecuenciaDesc(String proyectoId, boolean asignada);
+    Flux<Ticket> findAllByProyectoIdAndAsignadaOrderBySecuencia(String proyectoId, boolean asignada);
 
     Flux<Ticket> findAllByProyectoIdAndAsignadoIdAndAsignadaOrderBySecuenciaDesc(String proyectoId, String usuarioId, boolean asignada);
 

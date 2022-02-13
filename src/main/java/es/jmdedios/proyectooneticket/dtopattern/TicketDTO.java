@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -17,7 +16,6 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Document(collection = "tickets")
 public class TicketDTO {
 
     private String ticketId;
@@ -25,8 +23,6 @@ public class TicketDTO {
     @NotNull(message = "{proyecto.codigo.null}")
     @NotBlank(message = "{proyecto.codigo.blank}")
     private String proyectoId;
-
-//    private long secuencia;
 
     private boolean asignada;
 

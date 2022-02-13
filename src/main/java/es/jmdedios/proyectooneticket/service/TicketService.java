@@ -28,8 +28,8 @@ public class TicketService {
     @Autowired
     UsuarioProyectoService usuarioProyectoService;
 
-    public Flux<Ticket> findAllByProyectoIdAndAsignadaOrderBySecuenciaDesc (String proyectoId, boolean asignada) {
-        return this.ticketRepository.findAllByProyectoIdAndAsignadaOrderBySecuenciaDesc(proyectoId, asignada);
+    public Flux<Ticket> findAllByProyectoIdAndAsignadaOrderBySecuencia (String proyectoId, boolean asignada) {
+        return this.ticketRepository.findAllByProyectoIdAndAsignadaOrderBySecuencia(proyectoId, asignada);
     }
 
     public Flux<Ticket> findAllByProyectoIdAndAsignadoIdAndAsignadaOrderBySecuenciaDesc (String proyectoId, String usuarioId, boolean asignada) {

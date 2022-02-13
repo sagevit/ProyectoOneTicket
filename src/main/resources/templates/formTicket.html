@@ -18,12 +18,13 @@
 
                 <input type="hidden" th:attr="name='proyectoId'" th:value="${ticketDTO.proyectoId}" />
                 <input type="hidden" th:attr="name='estado'" th:value="${ticketDTO.estado}" />
+                <input type="hidden" th:attr="name='realizado'" th:value="${ticketDTO.realizado}" />
                 <input type="hidden" th:attr="name='propietarioId'" th:value="${logged.id}" />
 
-                <div class="col-4 pb-3">
+                <div class="col-11 pb-3">
                     <label class="form-label ms-1 requiredField" for="asunto" th:text="#{ticket.asunto.texto}">asunto *</label>
                     <div class="input-group" th:classappend="${#fields.hasErrors('asunto')} ? 'has-validation'">
-                        <input type="text" id="asunto" maxlength="50" placeholder="Asunto..." autofocus required
+                        <input type="text" id="asunto" maxlength="180" placeholder="Asunto..." autofocus required
                                class="form-control shadow-sm"
                                th:placeholder="#{asunto.etc}" th:field="*{asunto}"
                                th:classappend="${#fields.hasErrors('asunto')} ? 'is-invalid'">
@@ -71,7 +72,7 @@
                 </div>
 
                 <div class="col-4 pb-3" th:if="${#strings.equals(logged.rol, rolManager)}">
-                    <label class="form-label ms-1" for="asignado" th:text="#{ticket.asignado.texto}">asignar al usuario</label>
+                    <label class="form-label ms-1" for="asignado" th:text="#{ticket.asignar.texto}">asignar al usuario</label>
                     <div class="input-group">
                         <select class="form-select shadow-sm" id="asignado" th:field="*{asignadoId}">
                             <option selected value="">...</option>

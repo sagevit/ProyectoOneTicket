@@ -47,11 +47,11 @@ public class TicketController {
                     } else {
                         model.addAttribute("rolManager", RolesEnum.MANAGER);
                         model.addAttribute("proyecto", this.proyectoService.findById(proyectoId));
-                        //TODO: solo buscar los tickets no asignados cuando el usuario sea Manager
-                        model.addAttribute("ticketsNoAsignados", this.ticketService
-                                .findAllByProyectoIdAndAsignadaOrderBySecuenciaDesc(proyectoId, false));
                         model.addAttribute("ticketsAsignados", this.ticketService
                                 .findAllByProyectoIdAndAsignadoIdAndAsignadaOrderBySecuenciaDesc(proyectoId, result.getId(), true));
+                        //TODO: solo buscar los tickets no asignados cuando el usuario sea Manager
+                        model.addAttribute("ticketsNoAsignados", this.ticketService
+                                .findAllByProyectoIdAndAsignadaOrderBySecuencia(proyectoId, false));
                         return "tickets";
                     }
                 });
@@ -62,17 +62,22 @@ public class TicketController {
 
         TicketDTO ticketDTO = new TicketDTO();
         ticketDTO.setProyectoId(proyectoId);
+        ticketDTO.setRealizado(0);
         ticketDTO.setEstado(EstadosEnum.INICIAL);
 
         model.addAttribute("rolManager", RolesEnum.MANAGER);
         model.addAttribute("ticketDTO", ticketDTO);
         model.addAttribute("tipos", TiposEnum.values());
         model.addAttribute("prioridades", PrioridadEnum.values());
-        model.addAttribute("usuariosAsignables", null);
-
         //TODO: solo buscar los usuarios cuando el usuario sea Manager
         model.addAttribute("usuariosAsignables", this.ticketService.buscarManagersOrDevelopersProyecto(proyectoId));
 
+        return "formTicket";
+    }
+
+    @GetMapping("{proyectoId}/editar/{id}")
+    public String editar(@PathVariable String proyectoId, @PathVariable String id, final Model model) {
+        model.addAttribute("proyecto", this.proyectoService.findById(id));
         return "formTicket";
     }
 

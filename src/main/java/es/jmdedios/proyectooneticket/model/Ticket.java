@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.cglib.core.Local;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
@@ -16,7 +17,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
@@ -39,17 +40,19 @@ public class Ticket {
 
     private TiposEnum tipo;
 
-    private EstadosEnum estado;
-
     private PrioridadEnum prioridad;
+
+    private EstadosEnum estado;
 
     private Integer realizado;
 
+    private String descripcion;
+
     //fecha de inicio
-    private Date fechaCreacion;
+    private LocalDate fechaCreacion;
 
     //fecha de fin
-    private Date fechaFinalizacion;
+    private LocalDate fechaFinalizacion;
 
     //Usuario de creación (manager y usuario)
     private String propietarioId;
@@ -68,12 +71,14 @@ public class Ticket {
     public static final String SEQUENCE_NAME = "tickets_sequence";
 
     public Ticket (TicketDTO ticketDTO) {
+        this.id = ticketDTO.getTicketId();
         this.proyectoId = ticketDTO.getProyectoId();
         this.asunto = ticketDTO.getAsunto();
         this.tipo = ticketDTO.getTipo();
-        this.estado = ticketDTO.getEstado();
         this.prioridad = ticketDTO.getPrioridad();
-        this.realizado = 0;
+        this.estado = ticketDTO.getEstado();
+        this.realizado = ticketDTO.getRealizado();
+        this.descripcion = ticketDTO.getDescripcion();
         this.propietarioId = ticketDTO.getPropietarioId();
         if (ticketDTO.getAsignadoId().isBlank()) {
             this.asignada = false;
@@ -81,7 +86,7 @@ public class Ticket {
             this.asignada = true;
             this.asignadoId = ticketDTO.getAsignadoId();
         }
-        this.fechaCreacion = new Date();
+        this.fechaCreacion = LocalDate.now();
     }
 
 }

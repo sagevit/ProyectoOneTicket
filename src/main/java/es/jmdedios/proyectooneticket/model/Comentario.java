@@ -10,11 +10,13 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Document(collection = "tickets")
+@Document(collection = "comentarios")
 public class Comentario {
 
     @Id
@@ -32,7 +34,10 @@ public class Comentario {
     public static final String SEQUENCE_NAME = "tickets_sequence";
 
     public Comentario (TicketDTO ticketDTO) {
-
+        this.ticketId = ticketDTO.getTicketId();
+        this.estado = ticketDTO.getEstado();
+        this.realizado = ticketDTO.getRealizado();
+        this.comentario = ticketDTO.getDescripcion();
     }
 
 }
