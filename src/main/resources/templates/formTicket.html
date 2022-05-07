@@ -20,6 +20,7 @@
                 <input type="hidden" th:attr="name='estado'" th:value="${ticketDTO.estado}" />
                 <input type="hidden" th:attr="name='realizado'" th:value="${ticketDTO.realizado}" />
                 <input type="hidden" th:attr="name='propietarioId'" th:value="${logged.id}" />
+                <input type="hidden" th:if="${#strings.equals(logged.rol, rolDeveloper)}" th:attr="name='asignadoId'" th:value="${logged.id}" />
 
                 <div class="col-11 pb-3">
                     <label class="form-label ms-1 requiredField" for="asunto" th:text="#{ticket.asunto.texto}">asunto *</label>
@@ -72,7 +73,7 @@
                 </div>
 
                 <div class="col-4 pb-3" th:if="${#strings.equals(logged.rol, rolManager)}">
-                    <label class="form-label ms-1" for="asignado" th:text="#{ticket.asignar.texto}">asignar al usuario</label>
+                    <label class="form-label ms-1" for="asignado" th:text="#{ticket.asignar.usuario}">asignar al usuario</label>
                     <div class="input-group">
                         <select class="form-select shadow-sm" id="asignado" th:field="*{asignadoId}">
                             <option selected value="">...</option>

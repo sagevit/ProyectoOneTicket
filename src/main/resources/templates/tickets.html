@@ -61,6 +61,15 @@
                         </div>
                     </div>
                 </div>
+                <!-- Elemento + para dar de alta tickets -->
+                <div class="card shadow-sm">
+                    <a class="text-decoration-none" th:href="@{/tickets/{id}/nuevo (id=${proyecto.id})}">
+                        <div class="card-body row p-1">
+                            <div class="card-text col-6 text-end" th:text="#{ticket.nuevo.ticket}">nuevo ticket</div>
+                            <div class="card-text col-1"><i class="bi bi-node-plus-fill"></i></div>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
     </div>

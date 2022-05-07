@@ -66,6 +66,7 @@ public class TicketController {
         ticketDTO.setEstado(EstadosEnum.INICIAL);
 
         model.addAttribute("rolManager", RolesEnum.MANAGER);
+        model.addAttribute("rolDeveloper", RolesEnum.DEVELOPER);
         model.addAttribute("ticketDTO", ticketDTO);
         model.addAttribute("tipos", TiposEnum.values());
         model.addAttribute("prioridades", PrioridadEnum.values());

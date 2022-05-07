@@ -19,24 +19,30 @@
                     <div class="card shadow-sm h-100">
                         <div class="card-header d-flex">
                             <a href="#" class="me-auto text-decoration-none"
-                               th:href="@{/tickets/{id} (id=${proyecto.id})}">
+                               data-bs-toggle="tooltip" data-bs-placement="top" title="Seleccionar proyecto"
+                               th:href="@{/tickets/{id} (id=${proyecto.id})}"
+                               th:title="#{proyecto.seleccionar.proyecto}">
                                 <i class="bi bi-diagram-3-fill me-1"></i>
                                 <strong th:text="${proyecto.codigo}">código de proyecto</strong>
                             </a>
                             <!-- Solo puede editar los proyectos el usuario manager -->
                             <a href="#" th:if="${#strings.equals(logged.rol, rolManager)}"
-                               th:href="@{/proyectos/editar/{id} (id=${proyecto.id})}">
+                               data-bs-toggle="tooltip" data-bs-placement="top" title="Editar proyecto"
+                               th:href="@{/proyectos/editar/{id} (id=${proyecto.id})}"
+                               th:title="#{proyecto.editar}">
                                 <i class="bi bi-pencil-square me-1 fs-5 me-2"></i>
                             </a>
                             <a href="#" th:if="${#strings.equals(logged.rol, rolManager)}"
-                               th:href="@{/proyectos/asignacion/{id} (id=${proyecto.id})}">
+                               data-bs-toggle="tooltip" data-bs-placement="top" title="Asignar usuarios"
+                               th:href="@{/proyectos/asignacion/{id} (id=${proyecto.id})}"
+                               th:title="#{proyecto.asignar.usuarios}">
                                 <i class="bi bi-person-plus-fill me-1 fs-5 me-2"></i>
                             </a>
                         </div>
                         <div class="card-body">
                             <div class="card-title" th:text="${proyecto.nombre}">nombre de proyecto</div>
-                            <div class="card-text text-secondary" th:text="${proyecto.descripcion}">descripción del
-                                proyecto
+                            <div class="card-text text-secondary" th:text="${proyecto.descripcion}">
+                                descripción del proyecto
                             </div>
                         </div>
                     </div>
@@ -47,7 +53,7 @@
                     <div class="col pb-2">
                         <a class="text-decoration-none" th:href="@{/proyectos/nuevo/}">
                             <div class="card shadow-sm h-100">
-                                <div class="card-header text-secondary fst-italic">Nuevo proyecto</div>
+                                <div class="card-header text-secondary fst-italic" th:text="#{proyecto.nuevo}">nuevo proyecto</div>
                                 <div class="card-body text-primary text-center">
                                     <i class="bi bi-node-plus-fill display-3 opacity-25"></i>
                                 </div>

@@ -8,7 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.springframework.cglib.core.Local;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
@@ -18,6 +17,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Data
 @AllArgsConstructor
@@ -80,7 +80,7 @@ public class Ticket {
         this.realizado = ticketDTO.getRealizado();
         this.descripcion = ticketDTO.getDescripcion();
         this.propietarioId = ticketDTO.getPropietarioId();
-        if (ticketDTO.getAsignadoId().isBlank()) {
+        if (Objects.isNull(ticketDTO.getAsignadoId()) || ticketDTO.getAsignadoId().isBlank()) {
             this.asignada = false;
         } else {
             this.asignada = true;
