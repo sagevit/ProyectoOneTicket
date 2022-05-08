@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
@@ -22,6 +23,9 @@ public class Comentario {
     @Id
     private String id;
 
+    @Indexed(name="unique_secuencia_index", unique = true)
+    private long secuencia;
+
     private String ticketId;
 
     private EstadosEnum estado;
@@ -31,7 +35,7 @@ public class Comentario {
     private String comentario;
 
     @Transient
-    public static final String SEQUENCE_NAME = "tickets_sequence";
+    public static final String SEQUENCE_NAME = "comentarios_sequence";
 
     public Comentario (TicketDTO ticketDTO) {
         this.ticketId = ticketDTO.getTicketId();

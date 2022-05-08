@@ -5,7 +5,7 @@
       layout:decorate="~{layout/principal}">
 <head>
     <meta charset="UTF-8">
-    <title>OneTicket - [[#{title.ticket}]]</title>
+    <title>OneTicket - [[#{title.tickets}]]</title>
 </head>
 <body>
 <th:block layout:fragment="contenido">
@@ -53,14 +53,17 @@
                 <!-- Un card por cada ticket existente en bd -->
                 <div th:each="ticket : ${ticketsAsignados}">
                     <div class="card shadow-sm h-100">
-                        <div class="card-body row p-1">
-                            <div class="card-text col-1" th:text="'#'+${ticket.secuencia}"># de ticket</div>
-                            <div class="card-text col-6" th:text="${ticket.asunto}">asunto</div>
-                            <div class="card-text col-3" th:text="${ticket.estado.descripcion}">estado</div>
-                            <div class="card-text col-2" th:text="${ticket.realizado}+'%'">realizado</div>
-                        </div>
+                        <a class="text-decoration-none" th:href="@{/comentarios/{idTicket} (idTicket=${ticket.id})}">
+                            <div class="card-body row p-1">
+                                <div class="card-text col-1" th:text="'#'+${ticket.secuencia}"># de ticket</div>
+                                <div class="card-text col-6" th:text="${ticket.asunto}">asunto</div>
+                                <div class="card-text col-3" th:text="${ticket.estado.descripcion}">estado</div>
+                                <div class="card-text col-2" th:text="${ticket.realizado}+'%'">realizado</div>
+                            </div>
+                        </a>
                     </div>
                 </div>
+
                 <!-- Elemento + para dar de alta tickets -->
                 <div class="card shadow-sm">
                     <a class="text-decoration-none" th:href="@{/tickets/{id}/nuevo (id=${proyecto.id})}">

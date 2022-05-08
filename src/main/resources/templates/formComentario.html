@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/principal}">
+<head>
+    <meta charset="UTF-8">
+    <title>OneTicket - [[#{title.ticket}]]</title>
+</head>
+<body>
+<th:block layout:fragment="contenido">
+
+    <div class="container bg-light border rounded-3 shadow p-2">
+
+        <div class="row">
+            <div class="col-12 text-end">
+                <div class="fs-2" th:text="'#'+${ticket.secuencia}"></div>
+            </div>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="#{text.asunto}">asunto</h5>
+                        <p class="card-text" th:text="${ticket.asunto}">texto del asunto</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-5">
+                que tal
+            </div>
+        </div>
+
+    </div>
+
+</th:block>
+<th:block layout:fragment="botonera">
+    <div class="container">
+        <div class="position-absolute top-0 start-50 translate-middle">
+            <div class="btn-group btn-flotante" role="group" th:with="atrasURL='/tickets/'+${ticket.proyectoId}">
+                <button type="button" class="btn btn-primary" th:onclick="window.location.href=[[${atrasURL}]]">
+                    <i class="bi bi-arrow-return-left mx-4"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</th:block>
+</body>
+</html>

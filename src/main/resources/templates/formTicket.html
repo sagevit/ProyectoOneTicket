@@ -5,7 +5,7 @@
       layout:decorate="~{layout/principal}">
 <head>
     <meta charset="UTF-8">
-    <title>OneTicket - [[#{title.ticket.creacion}]]</title>
+    <title th:text="'OneTicket - ' + (${ticketDTO.ticketId} ? #{ticket.editar} : #{ticket.nuevo})">OneTicket - ... ticket</title>
 </head>
 <body>
 <th:block layout:fragment="contenido">
