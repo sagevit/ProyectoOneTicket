@@ -21,7 +21,9 @@ public class TicketModelListener extends AbstractMongoEventListener<Ticket> {
     @Override
     public void onBeforeConvert(BeforeConvertEvent<Ticket> event) {
         try {
-            event.getSource().setSecuencia(generatorSecuencia.generarSecuencia(Ticket.SEQUENCE_NAME));
+            if (event.getSource().getSecuencia() == 0) {
+                event.getSource().setSecuencia(generatorSecuencia.generarSecuencia(Ticket.SEQUENCE_NAME));
+            }
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }

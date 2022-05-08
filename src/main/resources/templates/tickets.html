@@ -37,7 +37,7 @@
                     </div>
                     <!-- Un card por cada ticket existente en bd -->
                     <div th:each="ticket : ${ticketsNoAsignados}">
-                        <a class="text-decoration-none" href="#" th:href="@{#}">
+                        <a class="text-decoration-none" href="#" th:href="@{/tickets/{idProyecto}/editar/{idTicket} (idProyecto=${proyecto.id}, idTicket=${ticket.id})}">
                             <div class="card shadow-sm h-100">
                                 <div class="card-body row p-1">
                                     <div class="card-text col-2" th:text="'#'+${ticket.secuencia}">#</div>

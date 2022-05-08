@@ -47,8 +47,13 @@ public class TicketController {
                     } else {
                         model.addAttribute("rolManager", RolesEnum.MANAGER);
                         model.addAttribute("proyecto", this.proyectoService.findById(proyectoId));
-                        model.addAttribute("ticketsAsignados", this.ticketService
-                                .findAllByProyectoIdAndAsignadoIdAndAsignadaOrderBySecuenciaDesc(proyectoId, result.getId(), true));
+                        if (result.getRol().equals(RolesEnum.USER)) {
+                            model.addAttribute("ticketsAsignados", this.ticketService
+                                    .findAllByProyectoIdAndPropietarioIdOrderBySecuenciaDesc(proyectoId, result.getId()));
+                        } else {
+                            model.addAttribute("ticketsAsignados", this.ticketService
+                                    .findAllByProyectoIdAndAsignadoIdAndAsignadaOrderBySecuenciaDesc(proyectoId, result.getId(), true));
+                        }
                         //TODO: solo buscar los tickets no asignados cuando el usuario sea Manager
                         model.addAttribute("ticketsNoAsignados", this.ticketService
                                 .findAllByProyectoIdAndAsignadaOrderBySecuencia(proyectoId, false));
@@ -58,7 +63,7 @@ public class TicketController {
     }
 
     @GetMapping("{proyectoId}/nuevo")
-    public String nuevo(@PathVariable String proyectoId, Authentication auth, final Model model) {
+    public String nuevo(@PathVariable String proyectoId, final Model model) {
 
         TicketDTO ticketDTO = new TicketDTO();
         ticketDTO.setProyectoId(proyectoId);
@@ -76,9 +81,19 @@ public class TicketController {
         return "formTicket";
     }
 
-    @GetMapping("{proyectoId}/editar/{id}")
-    public String editar(@PathVariable String proyectoId, @PathVariable String id, final Model model) {
-        model.addAttribute("proyecto", this.proyectoService.findById(id));
+    @GetMapping("{proyectoId}/editar/{ticketId}")
+    public String editar(@PathVariable String proyectoId, @PathVariable String ticketId, final Model model) {
+
+        TicketDTO ticketDTO = new TicketDTO(this.ticketService.findById(ticketId));
+
+        model.addAttribute("rolManager", RolesEnum.MANAGER);
+        model.addAttribute("rolDeveloper", RolesEnum.DEVELOPER);
+        model.addAttribute("ticketDTO", ticketDTO);
+        model.addAttribute("tipos", TiposEnum.values());
+        model.addAttribute("prioridades", PrioridadEnum.values());
+        //TODO: solo buscar los usuarios cuando el usuario sea Manager
+        model.addAttribute("usuariosAsignables", this.ticketService.buscarManagersOrDevelopersProyecto(proyectoId));
+
         return "formTicket";
     }
 

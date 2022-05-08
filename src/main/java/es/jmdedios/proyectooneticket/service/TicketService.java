@@ -12,9 +12,7 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 
 @Service
 public class TicketService {
@@ -28,6 +26,10 @@ public class TicketService {
     @Autowired
     UsuarioProyectoService usuarioProyectoService;
 
+    public Mono<Ticket> findById(String id) {
+        return this.ticketRepository.findById(id);
+    }
+
     public Flux<Ticket> findAllByProyectoIdAndAsignadaOrderBySecuencia (String proyectoId, boolean asignada) {
         return this.ticketRepository.findAllByProyectoIdAndAsignadaOrderBySecuencia(proyectoId, asignada);
     }
@@ -36,6 +38,9 @@ public class TicketService {
         return this.ticketRepository.findAllByProyectoIdAndAsignadoIdAndAsignadaOrderBySecuenciaDesc(proyectoId, usuarioId, asignada);
     }
 
+    public Flux<Ticket> findAllByProyectoIdAndPropietarioIdOrderBySecuenciaDesc (String proyectoId, String usuarioId) {
+        return this.ticketRepository.findAllByProyectoIdAndPropietarioIdOrderBySecuenciaDesc(proyectoId, usuarioId);
+    }
     public Flux<Usuario> buscarManagersOrDevelopersProyecto(String proyecto) {
         return this.usuarioProyectoService.findByProyecto(proyecto)
                 .concatMap(this::buildUsuario);

@@ -14,9 +14,11 @@
               th:action="@{|${submitURL}|}" th:object="${ticketDTO}">
 
             <fieldset>
-                <legend th:text="#{title.ticket.creacion}"></legend>
+                <legend th:text="*{ticketId} ? #{ticket.editar} : #{ticket.nuevo}"></legend>
 
+                <input type="hidden" th:attr="name='ticketId'" th:value="${ticketDTO.ticketId}" />
                 <input type="hidden" th:attr="name='proyectoId'" th:value="${ticketDTO.proyectoId}" />
+                <input type="hidden" th:attr="name='secuencia'" th:value="${ticketDTO.secuencia}" />
                 <input type="hidden" th:attr="name='estado'" th:value="${ticketDTO.estado}" />
                 <input type="hidden" th:attr="name='realizado'" th:value="${ticketDTO.realizado}" />
                 <input type="hidden" th:attr="name='propietarioId'" th:value="${logged.id}" />

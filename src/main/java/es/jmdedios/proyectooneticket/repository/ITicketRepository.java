@@ -14,4 +14,6 @@ public interface ITicketRepository extends ReactiveMongoRepository<Ticket, Strin
 
     Flux<Ticket> findAllByProyectoIdAndAsignadoIdAndAsignadaOrderBySecuenciaDesc(String proyectoId, String usuarioId, boolean asignada);
 
+    Flux<Ticket> findAllByProyectoIdAndPropietarioIdOrderBySecuenciaDesc(String proyectoId, String usuarioId);
+
 }

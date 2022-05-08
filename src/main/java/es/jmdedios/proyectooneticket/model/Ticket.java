@@ -8,15 +8,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Objects;
 
 @Data
@@ -60,19 +58,15 @@ public class Ticket {
     //Usuario asignado (manager y developer)
     private String asignadoId;
 
-    //Datos de auditoria
-    @CreatedDate
-    private Instant createdDate;
-
-    @CreatedBy
-    private String createdBy;
-
     @Transient
     public static final String SEQUENCE_NAME = "tickets_sequence";
 
     public Ticket (TicketDTO ticketDTO) {
-        this.id = ticketDTO.getTicketId();
+        if (!ticketDTO.getTicketId().isBlank()) {
+            this.id = ticketDTO.getTicketId();
+        }
         this.proyectoId = ticketDTO.getProyectoId();
+        this.secuencia = ticketDTO.getSecuencia();
         this.asunto = ticketDTO.getAsunto();
         this.tipo = ticketDTO.getTipo();
         this.prioridad = ticketDTO.getPrioridad();
@@ -86,7 +80,14 @@ public class Ticket {
             this.asignada = true;
             this.asignadoId = ticketDTO.getAsignadoId();
         }
-        this.fechaCreacion = LocalDate.now();
+        if (Objects.isNull(ticketDTO.getFechaCreacion())) {
+            this.fechaCreacion = LocalDate.now();
+        } else {
+            this.fechaCreacion = ticketDTO.getFechaCreacion().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        }
+        if (!Objects.isNull(ticketDTO.getFechaFinalizacion())) {
+            this.fechaFinalizacion = ticketDTO.getFechaFinalizacion().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        }
     }
 
 }
