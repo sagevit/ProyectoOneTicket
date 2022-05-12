@@ -2,11 +2,14 @@ package es.jmdedios.proyectooneticket.service;
 
 import es.jmdedios.proyectooneticket.model.Usuario;
 import es.jmdedios.proyectooneticket.repository.IUsuarioRepository;
+import es.jmdedios.proyectooneticket.utilities.RolesEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.ReactiveSecurityContextHolder;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.Objects;
 
 @Service
 public class UsuarioService {
@@ -15,7 +18,11 @@ public class UsuarioService {
     IUsuarioRepository usuarioRepository;
 
     public Mono<Usuario> findById(String id) {
-        return this.usuarioRepository.findById(id);
+        if (Objects.isNull(id)) {
+            return Mono.just(new Usuario(null, null, "---", null, null));
+        } else {
+            return this.usuarioRepository.findById(id);
+        }
     }
 
     public Mono<Usuario> findByCodigo(String username) {

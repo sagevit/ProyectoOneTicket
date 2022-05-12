@@ -61,12 +61,15 @@ public class TicketController {
     }
 
     @GetMapping("{proyectoId}/nuevo")
-    public String nuevo(@PathVariable String proyectoId, final Model model) {
+    public String nuevo(@PathVariable String proyectoId, Authentication auth, final Model model) {
 
         TicketDTO ticketDTO = new TicketDTO();
         ticketDTO.setProyectoId(proyectoId);
         ticketDTO.setRealizado(0);
         ticketDTO.setEstado(EstadosEnum.INICIAL);
+        ticketDTO.setPropietarioId(this.usuarioService.findByCodigo(auth.getName())
+                .map(u -> u.getId())
+                .block());
 
         model.addAttribute("rolManager", RolesEnum.MANAGER);
         model.addAttribute("rolDeveloper", RolesEnum.DEVELOPER);
@@ -80,11 +83,9 @@ public class TicketController {
     @GetMapping("{proyectoId}/editar/{ticketId}")
     public String editar(@PathVariable String proyectoId, @PathVariable String ticketId, final Model model) {
 
-        TicketDTO ticketDTO = new TicketDTO(this.ticketService.findById(ticketId));
-
         model.addAttribute("rolManager", RolesEnum.MANAGER);
         model.addAttribute("rolDeveloper", RolesEnum.DEVELOPER);
-        model.addAttribute("ticketDTO", ticketDTO);
+        model.addAttribute("ticketDTO", new TicketDTO(this.ticketService.findById(ticketId)));
         //TODO: solo buscar los usuarios cuando el usuario sea Manager
         model.addAttribute("usuariosAsignables", this.ticketService.buscarManagersOrDevelopersProyecto(proyectoId));
 

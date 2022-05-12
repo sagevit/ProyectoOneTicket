@@ -18,7 +18,7 @@
             <input type="hidden" th:attr="name='secuencia'" th:value="${ticketDTO.secuencia}" />
             <input type="hidden" th:attr="name='estado'" th:value="${ticketDTO.estado}" />
             <input type="hidden" th:attr="name='realizado'" th:value="${ticketDTO.realizado}" />
-            <input type="hidden" th:attr="name='propietarioId'" th:value="${logged.id}" />
+            <input type="hidden" th:attr="name='propietarioId'" th:value="${ticketDTO.propietarioId}" />
             <input type="hidden" th:if="${#strings.equals(logged.rol, rolDeveloper)}" th:attr="name='asignadoId'" th:value="${logged.id}" />
 
             <fieldset>
@@ -28,7 +28,7 @@
                     <label class="form-label ms-1 requiredField" for="asunto" th:text="#{ticket.asunto.texto}">asunto *</label>
                     <div class="input-group" th:classappend="${#fields.hasErrors('asunto')} ? 'has-validation'">
                         <input type="text" id="asunto" maxlength="180" placeholder="Asunto..." autofocus required
-                               class="form-control shadow-sm"
+                               class="form-control shadow-sm" spellcheck="false"
                                th:placeholder="#{asunto.etc}" th:field="*{asunto}"
                                th:classappend="${#fields.hasErrors('asunto')} ? 'is-invalid'">
                         <div class="invalid-feedback ms-1" th:if="${#fields.hasErrors('asunto')}"

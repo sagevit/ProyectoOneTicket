@@ -57,8 +57,9 @@
                             <div class="card-body row p-1">
                                 <div class="card-text col-1" th:text="'#'+${ticket.secuencia}"># de ticket</div>
                                 <div class="card-text col-6" style="max-width: 400px" th:text="${ticket.asunto}">asunto</div>
-                                <div class="card-text col-3" th:text="${ticket.estado.descripcion}">estado</div>
-                                <div class="card-text col-2" th:text="${ticket.realizado}+'%'">realizado</div>
+                                <div class="card-text col-2" th:text="${ticket.asignada ? 'Asignada' : 'No asignada'}">asignada a</div>
+                                <div class="card-text col-2" th:text="${ticket.estado.descripcion}">estado</div>
+                                <div class="card-text col-1" th:text="${ticket.realizado}+'%'">realizado</div>
                             </div>
                         </a>
                     </div>
