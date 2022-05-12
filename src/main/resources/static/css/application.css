@@ -30,3 +30,7 @@ body {
     border: 5px solid white !important;
     border-radius: 10px;
 }
+
+.progress {
+    height: 24px;
+}

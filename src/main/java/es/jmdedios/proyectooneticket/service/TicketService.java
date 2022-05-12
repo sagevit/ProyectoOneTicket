@@ -1,17 +1,20 @@
 package es.jmdedios.proyectooneticket.service;
 
 import es.jmdedios.proyectooneticket.dtopattern.TicketDTO;
+import es.jmdedios.proyectooneticket.model.Comentario;
 import es.jmdedios.proyectooneticket.model.Ticket;
 import es.jmdedios.proyectooneticket.model.Usuario;
 import es.jmdedios.proyectooneticket.model.UsuarioProyecto;
 import es.jmdedios.proyectooneticket.repository.ITicketRepository;
 import es.jmdedios.proyectooneticket.repository.IUsuarioRepository;
+import es.jmdedios.proyectooneticket.utilities.EstadosEnum;
 import es.jmdedios.proyectooneticket.utilities.RolesEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 
 @Service
@@ -55,6 +58,17 @@ public class TicketService {
         return this.ticketRepository.save(new Ticket(ticketDTO));
     }
 
-    public Mono<Ticket> save (Ticket ticket) { return this.ticketRepository.save(ticket); }
+    public Mono<Ticket> actualizarTicketComentario (Comentario comentario) {
+        return this.ticketRepository.findById(comentario.getTicketId())
+                .map(t -> {
+                    t.setEstado(comentario.getEstado());
+                    t.setRealizado(comentario.getRealizado());
+                    if (comentario.getEstado().equals(EstadosEnum.CERRADA)) {
+                        t.setFechaFinalizacion(LocalDate.now());
+                    }
+                    return t;
+                })
+                .flatMap(ticketRepository::save);
+    }
 
 }

@@ -10,35 +10,78 @@
 <body>
 <th:block layout:fragment="contenido">
 
-    <div class="container bg-light border rounded-3 shadow p-2">
+    <div th:insert="fragments/ticketFragment :: ticketFragment"></div>
 
-        <div class="row">
-            <div class="col-12 text-end">
-                <div class="fs-2" th:text="'#'+${ticket.secuencia}"></div>
-            </div>
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title" th:text="#{text.asunto}">asunto</h5>
-                        <p class="card-text" th:text="${ticket.asunto}">texto del asunto</p>
+    <div class="container bg-light border rounded-3 shadow mt-3 mb-5 p-2" th:with="submitURL='/comentarios/'+${ticket.id}+'/grabar'">
+        <form method="post" action="#" id="formComentario" role="form" class="row p-2"
+              th:action="@{|${submitURL}|}" th:object="${comentario}">
+
+            <input type="hidden" th:attr="name='ticketId'" th:value="${comentario.ticketId}" />
+
+            <fieldset>
+                <legend th:text="#{comentario.nuevo}"></legend>
+
+                <div class="col-2 pb-3">
+                    <label class="form-label ms-1 requiredField" for="estado" th:text="#{comentario.estado.texto}">estado *</label>
+                    <div class="input-group" th:classappend="${#fields.hasErrors('estado')} ? 'has-validation'">
+                        <select class="form-select shadow-sm" id="estado" required
+                                th:field="*{estado}" th:classappend="${#fields.hasErrors('estado')} ? 'is-invalid'">
+                            <option th:each="estadoOpt : ${T(es.jmdedios.proyectooneticket.utilities.EstadosEnum).values()}"
+                                    th:value="${estadoOpt}" th:text="${estadoOpt.descripcion}"></option>
+                        </select>
+                        <div class="invalid-feedback ms-1" th:if="${#fields.hasErrors('estado')}"
+                             th:errors="*{estado}">error!</div>
                     </div>
                 </div>
-            </div>
-            <div class="col-5">
-                que tal
-            </div>
-        </div>
 
+                <div class="col-2 pb-3">
+                    <div class="d-flex">
+                        <label class="form-label ms-1 requiredField me-auto" for="realizado" th:text="#{comentario.realizado.texto}">% realizado *</label>
+                        <label class="text-danger me-2" id="numero" th:text="*{realizado}">numero</label>
+                    </div>
+                    <div class="input-group" th:classappend="${#fields.hasErrors('realizado')} ? 'has-validation'">
+                        <input type="range" id="realizado" class="form-range shadow-sm" min="1" max="100" required
+                               th:field="*{realizado}"
+                               th:classappend="${#fields.hasErrors('realizado')} ? 'is-invalid'">
+                        <div class="invalid-feedback ms-1" th:if="${#fields.hasErrors('realizado')}"
+                             th:errors="*{realizado}">error!</div>
+                    </div>
+                </div>
+
+                <div class="col-12 pb-3">
+                    <label class="form-label ms-1" for="comentario" th:text="#{comentario.comentario.texto}">comentario</label>
+                    <div class="input-group" th:classappend="${#fields.hasErrors('comentario')} ? 'has-validation'">
+                        <textarea id="comentario" maxlength="1024" class="form-control shadow-sm" rows="7"
+                                  th:placeholder="#{comentario.etc}" th:field="*{comentario}"
+                                  th:classappend="${#fields.hasErrors('comentario')} ? 'is-invalid'">
+                        </textarea>
+                        <div class="invalid-feedback ms-1" th:if="${#fields.hasErrors('comentario')}"
+                             th:errors="*{comentario}">error!</div>
+                    </div>
+                </div>
+
+            </fieldset>
+        </form>
     </div>
+
+    <script th:inline="javascript">
+        var slider = document.getElementById("realizado");
+        var output = document.getElementById("numero");
+        output.innerHTML = slider.value; // Display the default slider value
+
+        // Update the current slider value (each time you drag the slider handle)
+        slider.oninput = function() {
+            output.innerHTML = this.value;
+        }
+    </script>
 
 </th:block>
 <th:block layout:fragment="botonera">
     <div class="container">
         <div class="position-absolute top-0 start-50 translate-middle">
-            <div class="btn-group btn-flotante" role="group" th:with="atrasURL='/tickets/'+${ticket.proyectoId}">
-                <button type="button" class="btn btn-primary" th:onclick="window.location.href=[[${atrasURL}]]">
-                    <i class="bi bi-arrow-return-left mx-4"></i>
-                </button>
+            <div class="btn-group btn-flotante" role="group" th:with="cancelURL='/comentarios/'+${ticket.id}">
+                <button type="submit" class="btn btn-success" form="formComentario"><i class="bi bi-check2-circle mx-4"></i></button>
+                <button type="button" class="btn btn-danger" th:onclick="window.location.href=[[${cancelURL}]]"><i class="bi bi-x-circle mx-4"></i></button>
             </div>
         </div>
     </div>

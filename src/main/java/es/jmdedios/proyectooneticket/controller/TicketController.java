@@ -6,9 +6,7 @@ import es.jmdedios.proyectooneticket.service.ProyectoService;
 import es.jmdedios.proyectooneticket.service.TicketService;
 import es.jmdedios.proyectooneticket.service.UsuarioService;
 import es.jmdedios.proyectooneticket.utilities.EstadosEnum;
-import es.jmdedios.proyectooneticket.utilities.PrioridadEnum;
 import es.jmdedios.proyectooneticket.utilities.RolesEnum;
-import es.jmdedios.proyectooneticket.utilities.TiposEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -73,8 +71,6 @@ public class TicketController {
         model.addAttribute("rolManager", RolesEnum.MANAGER);
         model.addAttribute("rolDeveloper", RolesEnum.DEVELOPER);
         model.addAttribute("ticketDTO", ticketDTO);
-        model.addAttribute("tipos", TiposEnum.values());
-        model.addAttribute("prioridades", PrioridadEnum.values());
         //TODO: solo buscar los usuarios cuando el usuario sea Manager
         model.addAttribute("usuariosAsignables", this.ticketService.buscarManagersOrDevelopersProyecto(proyectoId));
 
@@ -89,8 +85,6 @@ public class TicketController {
         model.addAttribute("rolManager", RolesEnum.MANAGER);
         model.addAttribute("rolDeveloper", RolesEnum.DEVELOPER);
         model.addAttribute("ticketDTO", ticketDTO);
-        model.addAttribute("tipos", TiposEnum.values());
-        model.addAttribute("prioridades", PrioridadEnum.values());
         //TODO: solo buscar los usuarios cuando el usuario sea Manager
         model.addAttribute("usuariosAsignables", this.ticketService.buscarManagersOrDevelopersProyecto(proyectoId));
 

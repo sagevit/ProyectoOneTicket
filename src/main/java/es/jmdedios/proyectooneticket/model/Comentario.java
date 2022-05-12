@@ -1,6 +1,5 @@
 package es.jmdedios.proyectooneticket.model;
 
-import es.jmdedios.proyectooneticket.dtopattern.TicketDTO;
 import es.jmdedios.proyectooneticket.utilities.EstadosEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,8 +9,12 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import reactor.core.publisher.Mono;
 
-import java.util.Date;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
@@ -28,20 +31,29 @@ public class Comentario {
 
     private String ticketId;
 
+    @NotNull(message = "{comentario.estado.null}")
     private EstadosEnum estado;
 
+    @Min(value = 1, message = "{comentario.realizado.min}")
+    @Max(value = 100, message = "{comentario.realizado.max}")
     private Integer realizado;
 
     private String comentario;
 
+    private LocalDate fechaCreacion;
     @Transient
     public static final String SEQUENCE_NAME = "comentarios_sequence";
 
-    public Comentario (TicketDTO ticketDTO) {
-        this.ticketId = ticketDTO.getTicketId();
-        this.estado = ticketDTO.getEstado();
-        this.realizado = ticketDTO.getRealizado();
-        this.comentario = ticketDTO.getDescripcion();
+    public Comentario (Mono<Ticket> ticket) {
+        ticket.subscribe(t -> {
+            this.ticketId = t.getId();
+            this.estado = t.getEstado();
+            if (t.getRealizado() == null || t.getRealizado() == 0) {
+                this.realizado = 1;
+            } else {
+                this.realizado = t.getRealizado();
+            }
+        });
     }
 
 }

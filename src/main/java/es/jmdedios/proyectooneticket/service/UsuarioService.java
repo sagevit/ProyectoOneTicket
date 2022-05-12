@@ -50,9 +50,7 @@ public class UsuarioService {
 
     public Mono<Usuario> getUsuario () {
         return this.getUsername()
-                .flatMap(username -> {
-                    return this.findByCodigo(username);
-                })
+                .flatMap(username -> this.findByCodigo(username))
                 .switchIfEmpty(Mono.just(new Usuario()));
     }
 

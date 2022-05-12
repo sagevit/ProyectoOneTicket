@@ -1,6 +1,7 @@
 package es.jmdedios.proyectooneticket.controller;
 
 import es.jmdedios.proyectooneticket.model.Comentario;
+import es.jmdedios.proyectooneticket.model.Ticket;
 import es.jmdedios.proyectooneticket.model.Usuario;
 import es.jmdedios.proyectooneticket.service.ComentarioService;
 import es.jmdedios.proyectooneticket.service.TicketService;
@@ -12,9 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 
 @Controller
 @RequestMapping("comentarios")
@@ -43,9 +46,27 @@ public class ComentariosController {
                         return "redirect:/admin";
                     } else {
                         model.addAttribute("ticket", this.ticketService.findById(ticketId));
-                        return "formComentario";
+                        model.addAttribute("asignado", this.ticketService.findById(ticketId)
+                                .flatMap(t -> this.usuarioService.findById(t.getAsignadoId())));
+                        model.addAttribute("propietario", this.ticketService.findById(ticketId)
+                                .flatMap(t -> this.usuarioService.findById(t.getPropietarioId())));
+                        model.addAttribute("comentarios", this.comentarioService.findAllByTicketIdOrderBySecuencia(ticketId));
+                        return "comentarios";
                     }
                 });
+    }
+
+    @GetMapping("{ticketId}/nuevo")
+    public String nuevo(@PathVariable String ticketId, final Model model) {
+
+        model.addAttribute("ticket", this.ticketService.findById(ticketId));
+        model.addAttribute("asignado", this.ticketService.findById(ticketId)
+                .flatMap(t -> this.usuarioService.findById(t.getAsignadoId())));
+        model.addAttribute("propietario", this.ticketService.findById(ticketId)
+                .flatMap(t -> this.usuarioService.findById(t.getPropietarioId())));
+        model.addAttribute("comentarios", this.comentarioService.findAllByTicketIdOrderBySecuencia(ticketId));
+        model.addAttribute("comentario", new Comentario(this.ticketService.findById(ticketId)));
+        return "formComentario";
     }
 
     @PostMapping("{ticketId}/grabar")
@@ -53,7 +74,11 @@ public class ComentariosController {
         if (errores.hasErrors()) {
             return "formComentario";
         }
+        comentario.setFechaCreacion(LocalDate.now());
         this.comentarioService.guardar(comentario).subscribe();
+
+        this.ticketService.actualizarTicketComentario(comentario).subscribe();
+
         return "redirect:/comentarios/"+comentario.getTicketId();
     }
 

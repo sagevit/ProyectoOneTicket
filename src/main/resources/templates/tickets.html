@@ -21,7 +21,7 @@
                         </div>
                         <div class="card-body">
                             <div class="card-title" th:text="${proyecto.nombre}">nombre de proyecto</div>
-                            <div class="card-text text-secondary" th:text="${proyecto.descripcion}">descripción del
+                            <div class="card-text text-secondary" style="max-width: 400px" th:text="${proyecto.descripcion}">descripción del
                                 proyecto
                             </div>
                         </div>
@@ -32,7 +32,7 @@
                     <!-- Card de título -->
                     <div class="card shadow-sm disabled list-group-item-primary">
                         <div class="card-body row p-1">
-                            <strong class="card-text text-center" th:text="#{tickets.pendientes.asignar}">tickets pendientes de asignar</strong>
+                            <strong class="card-text text-center" style="max-width: 400px" th:text="#{tickets.pendientes.asignar}">tickets pendientes de asignar</strong>
                         </div>
                     </div>
                     <!-- Un card por cada ticket existente en bd -->
@@ -41,7 +41,7 @@
                             <div class="card shadow-sm h-100">
                                 <div class="card-body row p-1">
                                     <div class="card-text col-2" th:text="'#'+${ticket.secuencia}">#</div>
-                                    <div class="card-text col-7" th:text="${ticket.asunto}">asunto</div>
+                                    <div class="card-text col-7" style="max-width: 400px" th:text="${ticket.asunto}">asunto</div>
                                 </div>
                             </div>
                         </a>
@@ -56,7 +56,7 @@
                         <a class="text-decoration-none" th:href="@{/comentarios/{idTicket} (idTicket=${ticket.id})}">
                             <div class="card-body row p-1">
                                 <div class="card-text col-1" th:text="'#'+${ticket.secuencia}"># de ticket</div>
-                                <div class="card-text col-6" th:text="${ticket.asunto}">asunto</div>
+                                <div class="card-text col-6" style="max-width: 400px" th:text="${ticket.asunto}">asunto</div>
                                 <div class="card-text col-3" th:text="${ticket.estado.descripcion}">estado</div>
                                 <div class="card-text col-2" th:text="${ticket.realizado}+'%'">realizado</div>
                             </div>
