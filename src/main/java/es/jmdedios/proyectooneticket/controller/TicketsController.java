@@ -19,7 +19,7 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("tickets")
-public class TicketController {
+public class TicketsController {
 
     @Autowired
     private TicketService ticketService;

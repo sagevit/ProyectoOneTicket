@@ -58,7 +58,7 @@ public class UsuarioService {
     public Mono<Usuario> getUsuario () {
         return this.getUsername()
                 .flatMap(username -> this.findByCodigo(username))
-                .switchIfEmpty(Mono.just(new Usuario()));
+                .switchIfEmpty(Mono.just(new Usuario(null, null, "---", null, null)));
     }
 
     private Mono<String> getUsername() {

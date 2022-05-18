@@ -16,7 +16,7 @@
 <th:block layout:fragment="botonera">
     <div class="container">
         <div class="position-absolute top-0 start-50 translate-middle">
-            <div class="btn-group btn-flotante" role="group" th:with="atrasURL='/tickets/'+${ticket.proyectoId}, nuevoComentario='/comentarios/'+${ticket.id}+'/nuevo'">
+            <div class="btn-group btn-flotante mt-3" role="group" th:with="atrasURL='/tickets/'+${ticket.proyectoId}, nuevoComentario='/comentarios/'+${ticket.id}+'/nuevo'">
                 <button type="button" class="btn btn-dark" th:onclick="window.location.href=[[${nuevoComentario}]]">
                     <i class="bi bi-pencil-fill mx-4"></i>
                 </button>

@@ -26,10 +26,15 @@
 
 </head>
 <body>
+
     <!-- Barra superior -->
     <header class="position-fixed top-0 w-100">
+
+        <span id="loggedId" class="d-none" th:text="${logged.id}"></span>
+
         <!-- Datos del usuario -->
         <div class="container d-flex flex-wrap align-items-center justify-content-between">
+
             <div class="d-flex my-auto">
                 <span class="align-middle" th:text="'Bienvenido, ' + ${logged.nombre}"></span>
             </div>
@@ -40,8 +45,7 @@
                 <span class="align-middle" th:text="'Email: ' + ${logged.email}"></span>
             </div>
             <div class="d-flex my-auto text-success">
-                <span class="align-middle opacity-75"
-                      th:text="'Rol: ' + ${logged.rol.descripcion}"></span>
+                <span class="align-middle opacity-75" th:text="'Rol: ' + ${logged.rol.descripcion}"></span>
             </div>
         </div>
 
@@ -83,6 +87,11 @@
         <div layout:fragment="contenido">
             <!-- Aquí irá el contenido de las distintas páginas -->
         </div>
+
+        <!-- Toasts -->
+        <div id="toastContainer" class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+            <!-- Aquí irán los toast de notificaciones -->
+        </div>
     </main>
 
     <footer class="position-fixed bottom-0 w-100 py-3 bg-primary">
@@ -90,6 +99,19 @@
             <!-- Aquí irá la botonera -->
         </div>
     </footer>
+
+    <template id="toastTemplate">
+        <div class="toast show rounded shadow" role="alert" data-bs-autohide="false">
+            <div class="toast-header">
+                <i class="bi bi-envelope-exclamation me-1"></i>
+                <strong class="me-auto">Notificación</strong>
+                <small id="fecha" class="text-muted">just now</small>
+            </div>
+            <div class="toast-body bg-light">
+                <a id="link" href="#" class="text-decoration-none"></a>
+            </div>
+        </div>
+    </template>
 
     <!-- Bootstrap JavaScript -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
@@ -99,9 +121,13 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"
             th:src="@{/webjars/jquery/dist/jquery.min.js}"></script>
 
+    <!-- Toast Notificaciones Control -->
+    <script type="text/javascript" src="../../static/js/notificaciones.js" th:src="@{/js/notificaciones.js}"></script>
+
+    <!-- Tooltip Control -->
     <script>
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        tooltipTriggerList.map(function (tooltipTriggerEl) {
             return new bootstrap.Tooltip(tooltipTriggerEl)
         })
     </script>

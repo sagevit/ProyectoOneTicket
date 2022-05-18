@@ -1,7 +1,6 @@
 package es.jmdedios.proyectooneticket.controller;
 
 import es.jmdedios.proyectooneticket.model.Comentario;
-import es.jmdedios.proyectooneticket.model.Ticket;
 import es.jmdedios.proyectooneticket.model.Usuario;
 import es.jmdedios.proyectooneticket.service.ComentarioService;
 import es.jmdedios.proyectooneticket.service.TicketService;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
