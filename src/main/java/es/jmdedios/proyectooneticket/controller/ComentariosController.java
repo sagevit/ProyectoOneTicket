@@ -1,10 +1,13 @@
 package es.jmdedios.proyectooneticket.controller;
 
 import es.jmdedios.proyectooneticket.model.Comentario;
+import es.jmdedios.proyectooneticket.model.Notificacion;
 import es.jmdedios.proyectooneticket.model.Usuario;
 import es.jmdedios.proyectooneticket.service.ComentarioService;
+import es.jmdedios.proyectooneticket.service.NotificacionService;
 import es.jmdedios.proyectooneticket.service.TicketService;
 import es.jmdedios.proyectooneticket.service.UsuarioService;
+import es.jmdedios.proyectooneticket.utilities.NotificacionEnum;
 import es.jmdedios.proyectooneticket.utilities.RolesEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -29,6 +32,9 @@ public class ComentariosController {
 
     @Autowired
     UsuarioService usuarioService;
+
+    @Autowired
+    NotificacionService notificacionService;
 
     @ModelAttribute("logged")
     public Mono<Usuario> userLogged() {
@@ -68,14 +74,27 @@ public class ComentariosController {
     }
 
     @PostMapping("{ticketId}/grabar")
-    public String submit(@Valid Comentario comentario, Errors errores) {
+    public String submit(@Valid Comentario comentario, Errors errores, Authentication auth) {
         if (errores.hasErrors()) {
             return "formComentario";
         }
         comentario.setFechaCreacion(LocalDate.now());
         this.comentarioService.guardar(comentario).subscribe();
-
-        this.ticketService.actualizarTicketComentario(comentario).subscribe();
+        this.ticketService.actualizarTicketComentario(comentario)
+            .subscribe(ticket -> {
+                this.usuarioService.findByCodigo(auth.getName())
+                    .subscribe(u -> {
+                        String usuarioId = null;
+                        if (u.getId().equals(ticket.getPropietarioId())) {
+                            usuarioId = ticket.getAsignadoId();
+                        } else {
+                            usuarioId = ticket.getPropietarioId();
+                        }
+                        this.notificacionService.guardar(new Notificacion(null, ticket.getId(),
+                                NotificacionEnum.ACTUALIZACION.getDescripcion().concat(" #").concat(Long.toString(ticket.getSecuencia())),
+                                "/comentarios/".concat(ticket.getId()), usuarioId, Boolean.TRUE, null)).subscribe();
+                    });
+            });
 
         return "redirect:/comentarios/"+comentario.getTicketId();
     }

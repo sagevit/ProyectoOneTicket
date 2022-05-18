@@ -5,10 +5,11 @@ import es.jmdedios.proyectooneticket.service.NotificacionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
+
+import java.time.Duration;
 
 @Controller
 @RequestMapping("notificaciones")
@@ -21,9 +22,13 @@ public class NotificacionesController {
     @RequestMapping(
             value = "/{usuarioId}",
             produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<Notificacion> notificacionesStream(
-            @PathVariable String usuarioId) {
-        return this.notificacionService.findWithTailableCursorByUsuarioId(usuarioId, true);
+    public Flux<Notificacion> notificacionesStream(@PathVariable String usuarioId) {
+        return this.notificacionService.findWithTailableCursorByUsuarioId(usuarioId, true).delayElements(Duration.ofMillis(500));
+    }
 
+    @GetMapping("/update/{id}")
+    public String invisibilizar(@PathVariable String id, @RequestParam String urlLink, final Model model) {
+        this.notificacionService.updateVisibilidadNotificacion(id, Boolean.FALSE);
+        return "redirect:"+urlLink;
     }
 }

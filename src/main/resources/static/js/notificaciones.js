@@ -27,7 +27,7 @@ function Notificaciones () {
             var dif = (tiempo2tmp - tiempo1tmp) / 1000;
             var textoDif = "Hace ";
             if (dif < 60) {
-                textoDif += dif + ' segundos';
+                textoDif += Math.trunc(dif) + ' segundos';
             } else if (dif < 3600) {
                 dif = dif / 60;
                 textoDif += Math.trunc(dif) + ' minutos';
@@ -41,7 +41,7 @@ function Notificaciones () {
             $fecha.textContent = textoDif;
 
             const $a = $import.querySelector("#link");
-            $a.setAttribute('href', notificacion.urlLink);
+            $a.setAttribute('href', '/notificaciones/update/'+notificacion.id+'?urlLink='+notificacion.urlLink);
             $a.textContent = notificacion.mensaje;
 
             $contenedor.appendChild($toastItem);

@@ -1,13 +1,10 @@
 package es.jmdedios.proyectooneticket.controller;
 
-import es.jmdedios.proyectooneticket.model.Notificacion;
 import es.jmdedios.proyectooneticket.model.Proyecto;
 import es.jmdedios.proyectooneticket.model.Usuario;
-import es.jmdedios.proyectooneticket.service.NotificacionService;
 import es.jmdedios.proyectooneticket.service.ProyectoService;
 import es.jmdedios.proyectooneticket.service.UsuarioProyectoService;
 import es.jmdedios.proyectooneticket.service.UsuarioService;
-import es.jmdedios.proyectooneticket.utilities.NotificacionEnum;
 import es.jmdedios.proyectooneticket.utilities.RolesEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -15,13 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-import org.thymeleaf.spring5.context.webflux.IReactiveDataDriverContextVariable;
-import org.thymeleaf.spring5.context.webflux.ReactiveDataDriverContextVariable;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
-import java.time.Duration;
 
 @Controller
 @RequestMapping("proyectos")
@@ -35,9 +28,6 @@ public class ProyectosController {
 
     @Autowired
     UsuarioProyectoService usuarioProyectoService;
-
-    @Autowired
-    NotificacionService notificacionService;
 
     @ModelAttribute("logged")
     public Mono<Usuario> userLogged() {
