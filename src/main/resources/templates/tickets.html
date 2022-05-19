@@ -50,6 +50,16 @@
             </div>
 
             <div class="bg-light border rounded-3 p-2">
+                <!-- Elemento + para dar de alta tickets -->
+                <div class="card shadow-sm mb-2">
+                    <a class="text-decoration-none" th:href="@{/tickets/{id}/nuevo (id=${proyecto.id})}">
+                        <div class="card-body row p-1">
+                            <div class="card-text col-6 text-end" th:text="#{ticket.nuevo.ticket}">nuevo ticket</div>
+                            <div class="card-text col-1"><i class="bi bi-node-plus-fill"></i></div>
+                        </div>
+                    </a>
+                </div>
+
                 <!-- Un card por cada ticket existente en bd -->
                 <div th:each="ticket : ${ticketsAsignados}">
                     <div class="card shadow-sm h-100">
@@ -63,16 +73,6 @@
                             </div>
                         </a>
                     </div>
-                </div>
-
-                <!-- Elemento + para dar de alta tickets -->
-                <div class="card shadow-sm">
-                    <a class="text-decoration-none" th:href="@{/tickets/{id}/nuevo (id=${proyecto.id})}">
-                        <div class="card-body row p-1">
-                            <div class="card-text col-6 text-end" th:text="#{ticket.nuevo.ticket}">nuevo ticket</div>
-                            <div class="card-text col-1"><i class="bi bi-node-plus-fill"></i></div>
-                        </div>
-                    </a>
                 </div>
             </div>
         </div>

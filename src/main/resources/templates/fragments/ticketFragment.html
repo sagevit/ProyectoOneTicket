@@ -108,55 +108,57 @@
         </div>
     </div>
 
-    <div class="container bg-success bg-opacity-10 border rounded-3 shadow mt-3 mb-1" th:each="comentario : ${comentarios}">
-        <div class="row">
-            <div class="col-12 d-flex">
-                <div class="fs-6 fst-italic me-auto" th:text="#{comentario.comentario.texto}">comentario</div>
-                <div class="fs-6 fst-italic" th:text="${comentario.secuencia}"></div>
-            </div>
-        </div>
-
-        <div class="row mb-1">
-            <div class="col-4">
-                <div class="card disabled">
-                    <div class="card-body">
-                        <h6 class="card-title text-secondary" th:text="#{text.estado}">estado</h6>
-                        <p class="card-text text-primary text-end" th:text="${comentario.estado.descripcion}">estado</p>
-                    </div>
+    <div th:each="comentario : ${comentarios}">
+        <div class="container bg-opacity-10 border rounded-3 shadow mt-3 mb-1" th:classappend="${comentario.usuarioId == logged.id ? 'bg-success' : 'bg-danger'}">
+            <div class="row" th:id="'comentario'+${comentario.secuencia}">
+                <div class="col-12 d-flex">
+                    <div class="fs-6 fst-italic me-auto" th:text="#{comentario.comentario.texto}">comentario</div>
+                    <div class="fs-6 fst-italic" th:text="${comentario.secuencia}"></div>
                 </div>
             </div>
 
-            <div class="col-4">
-                <div class="card disabled">
-                    <div class="card-body">
-                        <h6 class="card-title text-secondary" th:text="#{text.realizado}">realizado</h6>
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" th:style="'width: '+${comentario.realizado}+'%;'"
-                                 th:text="${comentario.realizado > 0 ? comentario.realizado : ''}">%</div>
+            <div class="row mb-1">
+                <div class="col-4">
+                    <div class="card disabled">
+                        <div class="card-body">
+                            <h6 class="card-title text-secondary" th:text="#{text.estado}">estado</h6>
+                            <p class="card-text text-primary text-end" th:text="${comentario.estado.descripcion}">estado</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="card disabled">
+                        <div class="card-body">
+                            <h6 class="card-title text-secondary" th:text="#{text.realizado}">realizado</h6>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" th:style="'width: '+${comentario.realizado}+'%;'"
+                                     th:text="${comentario.realizado > 0 ? comentario.realizado : ''}">%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="card disabled">
+                        <div class="card-body">
+                            <h6 class="card-title text-secondary" th:text="#{text.fecha.creacion}">fecha de creacion</h6>
+                            <p class="card-text text-primary text-end" th:text="${#temporals.format(comentario.fechaCreacion, 'dd-MM-yyyy')}">fecha de creacion</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-4">
-                <div class="card disabled">
-                    <div class="card-body">
-                        <h6 class="card-title text-secondary" th:text="#{text.fecha.creacion}">fecha de creacion</h6>
-                        <p class="card-text text-primary text-end" th:text="${#temporals.format(comentario.fechaCreacion, 'dd-MM-yyyy')}">fecha de creacion</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row mb-1">
-            <div class="col-12">
-                <div class="card disabled">
-                    <div class="card-body">
-                        <h6 class="card-title text-secondary" th:text="#{text.comentario}">comentario</h6>
-                        <textarea class="text-primary w-100" rows="7" disabled
-                                  th:text="${comentario.comentario}">
-                            comentario
-                        </textarea>
+            <div class="row mb-1">
+                <div class="col-12">
+                    <div class="card disabled">
+                        <div class="card-body">
+                            <h6 class="card-title text-secondary" th:text="#{text.comentario}">comentario</h6>
+                            <textarea class="text-primary w-100" rows="7" disabled
+                                      th:text="${comentario.comentario}">
+                                comentario
+                            </textarea>
+                        </div>
                     </div>
                 </div>
             </div>

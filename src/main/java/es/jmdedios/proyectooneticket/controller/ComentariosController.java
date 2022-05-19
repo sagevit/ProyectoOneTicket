@@ -92,7 +92,7 @@ public class ComentariosController {
                         }
                         this.notificacionService.guardar(new Notificacion(null, ticket.getId(),
                                 NotificacionEnum.ACTUALIZACION.getDescripcion().concat(" #").concat(Long.toString(ticket.getSecuencia())),
-                                "/comentarios/".concat(ticket.getId()), usuarioId, Boolean.TRUE, null)).subscribe();
+                                "/comentarios/".concat(ticket.getId()).concat("#comentario").concat(Long.toString(comentario.getSecuencia())), usuarioId, Boolean.TRUE, null)).subscribe();
                     });
             });
 

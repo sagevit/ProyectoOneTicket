@@ -40,6 +40,8 @@ public class Comentario {
 
     private String comentario;
 
+    private String usuarioId;
+
     private LocalDate fechaCreacion;
 
     @Transient

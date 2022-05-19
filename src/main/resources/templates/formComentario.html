@@ -17,6 +17,7 @@
               th:action="@{|${submitURL}|}" th:object="${comentario}">
 
             <input type="hidden" th:attr="name='ticketId'" th:value="${comentario.ticketId}" />
+            <input type="hidden" th:attr="name='usuarioId'" th:value="${logged.id}" />
 
             <fieldset>
                 <legend th:text="#{comentario.nuevo}"></legend>
