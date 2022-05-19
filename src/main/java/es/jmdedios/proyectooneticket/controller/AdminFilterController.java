@@ -25,7 +25,7 @@ public class AdminFilterController {
 
     @GetMapping("/{filtro}")
     public String filtrado(@PathVariable String filtro, Model model) {
-        Flux<Usuario> resultado = null;
+        Flux<Usuario> resultado;
         String valores[] = filtro.split("&");
         if (!valores[0].equals("-") && !valores[1].equals("-")) {
             resultado = this.usuarioService.findByNombreContainsIgnoreCaseAndRol(valores[0], valores[1]);

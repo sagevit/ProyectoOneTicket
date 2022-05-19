@@ -1,7 +1,6 @@
 package es.jmdedios.proyectooneticket.component;
 
 import es.jmdedios.proyectooneticket.model.Comentario;
-import es.jmdedios.proyectooneticket.model.Ticket;
 import es.jmdedios.proyectooneticket.repository.IGeneradorSecuencia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;

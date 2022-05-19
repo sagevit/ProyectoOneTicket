@@ -81,20 +81,18 @@ public class ComentariosController {
         comentario.setFechaCreacion(LocalDate.now());
         this.comentarioService.guardar(comentario).subscribe();
         this.ticketService.actualizarTicketComentario(comentario)
-            .subscribe(ticket -> {
-                this.usuarioService.findByCodigo(auth.getName())
-                    .subscribe(u -> {
-                        String usuarioId = null;
-                        if (u.getId().equals(ticket.getPropietarioId())) {
-                            usuarioId = ticket.getAsignadoId();
-                        } else {
-                            usuarioId = ticket.getPropietarioId();
-                        }
-                        this.notificacionService.guardar(new Notificacion(null, ticket.getId(),
-                                NotificacionEnum.ACTUALIZACION.getDescripcion().concat(" #").concat(Long.toString(ticket.getSecuencia())),
-                                "/comentarios/".concat(ticket.getId()).concat("#comentario").concat(Long.toString(comentario.getSecuencia())), usuarioId, Boolean.TRUE, null)).subscribe();
-                    });
-            });
+            .subscribe(ticket -> this.usuarioService.findByCodigo(auth.getName())
+                .subscribe(u -> {
+                    String usuarioId;
+                    if (u.getId().equals(ticket.getPropietarioId())) {
+                        usuarioId = ticket.getAsignadoId();
+                    } else {
+                        usuarioId = ticket.getPropietarioId();
+                    }
+                    this.notificacionService.guardar(new Notificacion(null, ticket.getId(),
+                            NotificacionEnum.ACTUALIZACION.getDescripcion().concat(" #").concat(Long.toString(ticket.getSecuencia())),
+                            "/comentarios/".concat(ticket.getId()).concat("#comentario").concat(Long.toString(comentario.getSecuencia())), usuarioId, Boolean.TRUE, null)).subscribe();
+                }));
 
         return "redirect:/comentarios/"+comentario.getTicketId();
     }

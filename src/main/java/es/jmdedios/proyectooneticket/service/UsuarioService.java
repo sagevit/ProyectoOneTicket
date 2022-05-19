@@ -2,7 +2,6 @@ package es.jmdedios.proyectooneticket.service;
 
 import es.jmdedios.proyectooneticket.model.Usuario;
 import es.jmdedios.proyectooneticket.repository.IUsuarioRepository;
-import es.jmdedios.proyectooneticket.utilities.RolesEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.ReactiveSecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -57,7 +56,7 @@ public class UsuarioService {
 
     public Mono<Usuario> getUsuario () {
         return this.getUsername()
-                .flatMap(username -> this.findByCodigo(username))
+                .flatMap(this::findByCodigo)
                 .switchIfEmpty(Mono.just(new Usuario(null, null, "---", null, null)));
     }
 

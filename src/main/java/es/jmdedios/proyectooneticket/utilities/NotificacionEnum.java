@@ -9,7 +9,7 @@ public enum NotificacionEnum {
     ASIGNACION("Nuevo ticket asignado"),
     ACTUALIZACION("Actualización del ticket");
 
-    private String descripcion;
+    final private String descripcion;
 
     NotificacionEnum(String descripcion) {
         this.descripcion = descripcion;

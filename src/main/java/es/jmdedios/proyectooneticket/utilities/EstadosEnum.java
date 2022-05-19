@@ -11,7 +11,7 @@ public enum EstadosEnum {
     ESPERA("A la espera"),
     CERRADA("Cerrada");
 
-    private String descripcion;
+    final private String descripcion;
 
     EstadosEnum(String descripcion) {
         this.descripcion = descripcion;

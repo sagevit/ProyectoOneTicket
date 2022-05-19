@@ -67,7 +67,7 @@ public class TicketDTO {
 
     public TicketDTO(Mono<Ticket> ticket) {
 
-        ticket.map( t -> {
+        ticket.mapNotNull(t -> {
             this.ticketId = t.getId();
             this.proyectoId = t.getProyectoId();
             this.secuencia = t.getSecuencia();

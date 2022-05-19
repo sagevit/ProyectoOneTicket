@@ -19,7 +19,7 @@ import org.springframework.security.ldap.userdetails.DefaultLdapAuthoritiesPopul
 import org.springframework.security.web.server.authentication.AuthenticationWebFilter;
 import org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers;
 
-import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @EnableWebFluxSecurity
@@ -68,7 +68,7 @@ public class LDAPReactiveSecurityConfig {
         LdapAuthenticationProvider provider = new LdapAuthenticationProvider(authenticator, authoritiesPopulator);
         provider.setAuthoritiesMapper(authoritiesMapper);
 
-        AuthenticationManager manager = new ProviderManager(Arrays.asList(provider));
+        AuthenticationManager manager = new ProviderManager(List.of(provider));
         return new ReactiveAuthenticationManagerAdapter(manager);
     }
 

@@ -11,7 +11,7 @@ public enum TiposEnum {
     PETICION("Petición"),
     EVOLUTIVO("Evolutivo");
 
-    private String descripcion;
+    final private String descripcion;
 
     TiposEnum(String descripcion) {
         this.descripcion = descripcion;

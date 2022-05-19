@@ -10,7 +10,7 @@ public enum PrioridadEnum {
     ALTA("Alta"),
     URGENTE("Urgente");
 
-    private String descripcion;
+    final private String descripcion;
 
     PrioridadEnum(String descripcion) {
         this.descripcion = descripcion;

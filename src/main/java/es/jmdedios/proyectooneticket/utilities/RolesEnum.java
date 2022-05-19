@@ -10,7 +10,7 @@ public enum RolesEnum {
     DEVELOPER("Desarrollador"),
     USER("Usuario");
 
-    private String descripcion;
+    final private String descripcion;
 
     RolesEnum(String descripcion) {
         this.descripcion = descripcion;

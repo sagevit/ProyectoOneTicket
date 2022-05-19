@@ -51,7 +51,7 @@ public class ProyectoService {
 
     private Mono<String> buildIdUsuario(final UsuarioProyecto usuarioProyecto){
         return this.usuarioRepository.findById(usuarioProyecto.getUsuario())
-                .map(retorno -> retorno.getId());
+                .map(Usuario::getId);
     }
 
     public void guardar (final Proyecto proyecto) {
@@ -61,11 +61,9 @@ public class ProyectoService {
         if (proyecto.getId() == null || proyecto.getId().isBlank()) {
             this.proyectoRepository
                     .save(proyecto)
-                    .handle((document, sink) -> {
-                        this.usuarioProyectoService
-                                .save(new UsuarioProyecto(null, document.getManagerId(), document.getId()))
-                                .subscribe();
-                    })
+                    .handle((document, sink) -> this.usuarioProyectoService
+                            .save(new UsuarioProyecto(null, document.getManagerId(), document.getId()))
+                            .subscribe())
                     .subscribe();
             /* En otro caso es que es una MODIFICACIÓN y se únicamente modifica el proyecto */
         } else {
@@ -73,10 +71,6 @@ public class ProyectoService {
                     .save(proyecto)
                     .subscribe();
         }
-    }
-
-    public Mono<Proyecto> save(Proyecto proyecto) {
-        return this.proyectoRepository.save(proyecto);
     }
 
 }
