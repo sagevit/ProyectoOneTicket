@@ -22,7 +22,7 @@ import org.springframework.security.web.server.util.matcher.ServerWebExchangeMat
 import java.util.List;
 
 @Configuration
-@EnableWebFluxSecurity
+//@EnableWebFluxSecurity
 public class LDAPReactiveSecurityConfig {
 
     @Value("${ldap.url}")
