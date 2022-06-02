@@ -9,7 +9,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.authentication.ReactiveAuthenticationManagerAdapter;
-import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
 import org.springframework.security.ldap.authentication.BindAuthenticator;
@@ -22,7 +21,6 @@ import org.springframework.security.web.server.util.matcher.ServerWebExchangeMat
 import java.util.List;
 
 @Configuration
-@EnableWebFluxSecurity
 public class LDAPReactiveSecurityConfig {
 
     @Value("${ldap.url}")
